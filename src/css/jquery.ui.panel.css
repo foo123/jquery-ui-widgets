@@ -1,0 +1,55 @@
+.ui-panel {
+    margin: 6px 0;
+    overflow: hidden;
+}
+
+.ui-panel-header {
+    position: relative;
+    z-index: 5;
+    min-height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    letter-spacing: 2px;
+    color: inherit;
+}
+.ui-panel .ui-panel  > .ui-panel-header {
+    min-height: 24px;
+    line-height: 24px;
+}
+
+.ui-panel-inner {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+}
+.ui-panel-overlay {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    padding: 20px 10px;
+    background: none;
+}
+
+.ui-panel-header  > .toggle {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    border: none;
+    display: block;
+    cursor: pointer;
+    z-index: 3;
+    top: 50%;
+    margin-top: -5px;
+    right: 5px;
+    background-color: transparent;
+}
+
+.ui-panel-header  > .toggle:active,
+.ui-panel-header  > .toggle:focus {
+    outline: none;
+}

@@ -1,0 +1,49 @@
+.ui-scrollable {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+}
+.ui-scrollable-pane {
+    position: absolute;
+    display: block;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.ui-scrollable-pane-horizontal,
+.ui-scrollable-pane-right,
+.ui-scrollable-pane-left {
+}
+.ui-scrollable-pane-vertical,
+.ui-scrollable-pane-down,
+.ui-scrollable-pane-up {
+}
+.ui-scrollable-item {
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.ui-scrollable-pane-right > .ui-scrollable-item,
+.ui-scrollable-pane-left > .ui-scrollable-item,
+.ui-scrollable-pane-horizontal > .ui-scrollable-item {
+    display: inline-block;
+    float: left;
+    padding: 0 20px;
+}
+.ui-scrollable-pane-down > .ui-scrollable-item,
+.ui-scrollable-pane-up > .ui-scrollable-item,
+.ui-scrollable-pane-vertical > .ui-scrollable-item {
+    display: block;
+    padding: 20px 0;
+}

@@ -1,0 +1,136 @@
+input[type=radio].ui-radio,
+input[type=checkbox].ui-checkbox
+{
+    display: none;
+}
+
+label.ui-radio,
+label.ui-checkbox
+{
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.ui-radio,
+.ui-checkbox
+{
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    font-size: 18px;
+    font-family: sans-serif;
+    border-color: #B2BCC8 #ACB6C0 #97ABBA;
+    color: #59718A;
+    background: none;
+    background-color:  #D3DDE7;
+    background-image: -webkit-linear-gradient(top, #F1F6FF, #D3DDE7 70%, #BFCDDC);
+    background-image: -moz-linear-gradient(top, #F1F6FF, #D3DDE7 70%, #BFCDDC);
+    background-image: -ms-linear-gradient(top, #F1F6FF, #D3DDE7 70%, #BFCDDC);
+    background-image: -o-linear-gradient(top, #F1F6FF, #D3DDE7 70%, #BFCDDC);
+    background-image: linear-gradient(to bottom, #F1F6FF, #D3DDE7 70%, #BFCDDC);
+    -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 1px 1px rgba(0, 0, 0, 0.2);
+    -ms-box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 1px 1px rgba(0, 0, 0, 0.2);
+    -o-box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 1px 1px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 1px rgba(255, 255, 255, 0.8);
+}
+label.ui-radio:before,
+label.ui-checkbox:before
+{
+    /* general styles */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    vertical-align: middle;
+    text-align: center;
+    cursor: inherit;
+    width: 100%;
+    height: 100%;
+    line-height: 90%;
+    font-size: 100%;
+    font-family: inherit;
+    color: inherit;
+    border: 0;
+    background: none;
+    content: " ";
+    font-weight: bold;
+}
+
+label.ui-radio,
+label.ui-checkbox
+{
+    /* specific styles */
+    border: 1px solid;
+    border-radius: 20%;
+}
+
+label.ui-radio
+{
+    /* specific styles */
+    border-radius: 50%;
+}
+label.ui-radio:before
+{
+    /* specific styles */
+    font-size: 150%;
+    height: 150%;
+    line-height: 75%;
+}
+
+input[type=checkbox].ui-checkbox:checked + label.ui-checkbox:before
+{
+    /*content: "\00B7";*/ /* middle dot */
+    /*content: "\2022";*/ /* bullet */
+    /*content: "\2795";*/ /* HEAVY PLUS SIGN */
+    /*content: "\2796";*/ /* HEAVY MINUS SIGN */
+    /*content: "\274C";*/ /* CROSS X MARK */
+    /*content: "\2713";*/ /* CHECK MARK */
+    content: "\2714"; /* HEAVY CHECK MARK */
+    /*content: "\2715";*/ /* MULT SIGN */
+    /*content: "\2716";*/ /* HEAVY MULT SIGN */
+    /*content: "\2717";*/ /* BALLOT X */
+    /*content: "\2718";*/ /* HEAVY BALLOT X */
+    /*content: "\2219";*/ /* bullet operator */
+    /*content: "\2B22";*/ /* SQUARE */
+    /*content: "\25A0";*/ /* SQUARE */
+    /*content: "\2B24";*/ /* CIRCLE */
+}
+input[type=radio].ui-radio:checked + label.ui-radio:before
+{
+    /*content: "\00B7";*/ /* middle dot */
+    content: "\2022"; /* bullet */
+    /*content: "\2795";*/ /* HEAVY PLUS SIGN */
+    /*content: "\2796";*/ /* HEAVY MINUS SIGN */
+    /*content: "\274C";*/ /* CROSS X MARK */
+    /*content: "\2713";*/ /* CHECK MARK */
+    /*content: "\2714";*/ /* HEAVY CHECK MARK */
+    /*content: "\2715";*/ /* MULT SIGN */
+    /*content: "\2716";*/ /* HEAVY MULT SIGN */
+    /*content: "\2717";*/ /* BALLOT X */
+    /*content: "\2718";*/ /* HEAVY BALLOT X */
+    /*content: "\2219";*/ /* bullet operator */
+    /*content: "\2B22";*/ /* SQUARE */
+    /*content: "\25A0";*/ /* SQUARE */
+    /*content: "\2B24";*/ /* CIRCLE */
+}

@@ -1,0 +1,8 @@
+.ui-delayable {
+    cursor: progress;
+    background: none;
+    background-color: rgba(255,255,255,.4);
+    background-repeat: no-repeat;
+    background-position: center center;
+    z-index: 500;
+}

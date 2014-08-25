@@ -1,0 +1,209 @@
+.ui-dropdown {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    width: auto;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    z-index: 1;
+    cursor: pointer;
+    margin: 2px 4px;
+}
+.ui-dropdown:before {
+    content: ' ';
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    display: block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    cursor: inherit;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 40px;
+    border: inherit;
+    border-left: none;
+    -webkit-border-radius: inherit;
+    -moz-border-radius: inherit;
+    -ms-border-radius: inherit;
+    -o-border-radius: inherit;
+    border-radius: inherit;
+    background-color: inherit;
+    background-image: inherit;
+    background: inherit;
+}
+.ui-dropdown:after {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    display: block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    cursor: inherit;
+    z-index: 3;
+    bottom: 0;
+    left: 5px;
+    height: 100%;
+    width: 40px;
+    line-height: 100%;
+    text-align: center;
+    word-break: keep-all;
+    font-family: sans-serif;
+    font-size: 8px;
+    content: "\25C4\25BA";
+    background: none;
+    color: inherit;
+    -webkit-transform-origin: center center;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform-origin: center center;
+    -moz-transform: rotate(-90deg);
+    -ms-transform-origin: center center;
+    -ms-transform: rotate(-90deg);
+    -o-transform-origin: center center;
+    -o-transform: rotate(-90deg);
+    transform-origin: center center;
+    transform: rotate(-90deg);
+}
+.ui-dropdown > select {
+    -webkit-appearance: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding: 10px 20px;
+    /*padding: .5em 1em;*/
+    line-height:normal;
+    height: 100%;
+    font-size: inherit;
+    border: 0;
+    border-radius: inherit;
+    color: inherit;
+    background: rgba(0, 0, 0, 0);
+    text-shadow: inherit;
+    cursor: inherit;
+}
+.ui-dropdown > select:hover,
+.ui-dropdown > select:focus {
+    color: inherit;
+    background-color: inherit;
+    outline: none;
+}
+.ui-dropdown option,
+.ui-dropdown optgroup {
+    position: relative;
+    cursor: pointer;
+    color: inherit;
+    background-color: inherit;
+    letter-spacing: 3px;
+    font-size: .9em;
+}
+.ui-dropdown > select  option {
+    margin: 4px;
+}
+.ui-dropdown option.dummy:disabled {
+    display: none !important;
+}
+
+.ui-dropdown ul.ui-dropdown-select-replace {
+    position: relative;
+    /*top: 100%;*/
+    z-index: 100;
+    list-style-type: none;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    max-height: 0;
+    overflow: hidden;
+    background: inherit;
+    color: inherit;
+    font-size: inherit;
+    -webkit-animation-name: none;
+    -webkit-animation-delay: 0s;
+    -webkit-animation-duration: .5s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-name: none;
+    -moz-animation-delay: 0s;
+    -moz-animation-duration: .5s;
+    -moz-animation-iteration-count: 1;
+    -moz-animation-timing-function: ease;
+    -moz-animation-fill-mode: forwards;
+    -ms-animation-name: none;
+    -ms-animation-delay: 0s;
+    -ms-animation-duration: .5s;
+    -ms-animation-iteration-count: 1;
+    -ms-animation-timing-function: ease;
+    -ms-animation-fill-mode: forwards;
+    -o-animation-name: none;
+    -o-animation-delay: 0s;
+    -o-animation-duration: .5s;
+    -o-animation-iteration-count: 1;
+    -o-animation-timing-function: ease;
+    -o-animation-fill-mode: forwards;
+    animation-name: none;
+    animation-delay: 0s;
+    animation-duration: .5s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+.ui-dropdown ul.ui-dropdown-select-replace.ui-dropdown-select-closed {
+    -webkit-animation-name: slideFadeUp;
+    -webkit-animation-timing-function: ease-out;
+    -moz-animation-name: slideFadeUp;
+    -moz-animation-timing-function: ease-out;
+    -ms-animation-name: slideFadeUp;
+    -ms-animation-timing-function: ease-out;
+    -o-animation-name: slideFadeUp;
+    -o-animation-timing-function: ease-out;
+    animation-name: slideFadeUp;
+    animation-timing-function: ease-out;
+}
+.ui-dropdown ul.ui-dropdown-select-replace.ui-dropdown-select-open {
+    -webkit-animation-name: slideFadeDown;
+    -webkit-animation-timing-function: ease-in;
+    -moz-animation-name: slideFadeDown;
+    -moz-animation-timing-function: ease-in;
+    -ms-animation-name: slideFadeDown;
+    -ms-animation-timing-function: ease-in;
+    -o-animation-name: slideFadeDown;
+    -o-animation-timing-function: ease-in;
+    animation-name: slideFadeDown;
+    animation-timing-function: ease-in;
+}
+
+@media all and (-webkit-min-device-pixel-ratio:0) 
+{
+    /* webkit specific overrides/hacks */
+    /*.ui-dropdown > select {
+        padding: .5em 2em;
+    }*/
+    .ui-dropdown:before {
+        display: none !important;
+    }
+}

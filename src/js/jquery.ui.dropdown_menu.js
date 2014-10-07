@@ -7,7 +7,7 @@
         },
         
         _create: function() {
-            var el = this.element, o = this.options, list;
+            var self = this, el = self.element, o = self.options, list;
 
             if ( o.wrap )
                 el.wrap("<div />").parent( ).addClass("ui-dropdown-menu");
@@ -22,10 +22,11 @@
         },
 
         _destroy: function() {
-            if ( this.options.wrap )
+            var self = this;
+            if ( self.options.wrap )
             {
-                var wrapper = this.element.parent( );
-                this.element.unwrap( );
+                var wrapper = self.element.parent( );
+                self.element.unwrap( );
                 wrapper.remove( );
             }
         }

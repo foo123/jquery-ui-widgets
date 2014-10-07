@@ -18,12 +18,18 @@ var jQueryUIExtra = function() {
         
         NS = function(s) { return NAMESPACE + "." + s; },
         
+        _UUID = 0,
+        
+        UUID = function( NS ) {
+            return [NS||'UI', ++_UUID, new Date().getTime()].join('_');
+        },
+        
         whichTransitionEvent = function() {
             var t, te = null,
                 el = document.createElement('div'),
                 transitions = {
                     'transition'        :'transitionend',
-                    'msTransition'      : 'MSTransitionEnd',
+                    'msTransition'      :'MSTransitionEnd',
                     'OTransition'       :'oTransitionEnd',
                     'MozTransition'     :'transitionend',
                     'WebkitTransition'  :'webkitTransitionEnd'
@@ -44,37 +50,12 @@ var jQueryUIExtra = function() {
     
     return {
         NS: NS,
+        UUID: UUID,
         transitionEvent: whichTransitionEvent()
     };
 }();
 
-!function($, undef) {
-    
-    /* effects */
-    $.fn.slideFadeDown = function(speed, easing, callback) {
-        var complete = function() {
-                if ($.isFunction(callback)) { callback.call(this); }
-            };
-            
-        return this.each(function(){$(this).stop(true).animate({opacity: 'show', height: 'show'}, speed, easing || 'linear', complete );
-        });
-    };
-
-    $.fn.slideFadeUp = function(speed, easing, callback) {
-        var complete = function() {
-                if ($.isFunction(callback)) { callback.call(this); }
-            };
-            
-        return this.each(function(){
-            if ($(this).is(':hidden'))
-                $(this).hide(); // makes element not lose height if already hidden (eg by parent element)
-            else
-            {
-                $(this).stop(true).animate({opacity: 'hide', height: 'hide'}, speed, easing || 'linear', complete);
-            }
-        });
-    };
-}(jQuery);!function($, $UI, undef) {
+!function($, $UI, undef) {
 
     $.widget( $UI.NS("dropdown"), {
         
@@ -94,15 +75,15 @@ var jQueryUIExtra = function() {
         _list: null,
         
         _create: function() {
-            var el = this.element, o = this.options, list;
+            var self = this, el = self.element, o = self.options, list;
 
             el.addClass(o.classes.select).wrap("<span />").parent().addClass(o.classes.wrapper);
             if ( o.replace )
             {
-                this._list = list = this._replace( el );
+                self._list = list = self._replace( el );
                 el.after( list );
                 el.addClass( o.classes.replaced );
-                this._bindHandlers();
+                self._bindHandlers();
             }
         },
 
@@ -154,14 +135,14 @@ var jQueryUIExtra = function() {
         },
         
         _destroy: function() {
-            var o = this.options;
-            var wrapper = this.element.parent();
-            this.element.unwrap().removeClass([o.classes.select, o.classes.replaced].join(' '));
+            var self = this, o = self.options;
+            var wrapper = self.element.parent();
+            self.element.unwrap().removeClass([o.classes.select, o.classes.replaced].join(' '));
             if ( o.replace )
             {
-                this._off(this.element, 'mousedown');
-                this._off(this.element, 'focus');
-                this._list.remove();
+                self._off(self.element, 'mousedown');
+                self._off(self.element, 'focus');
+                self._list.remove();
             }
             wrapper.remove();
         }
@@ -176,7 +157,7 @@ var jQueryUIExtra = function() {
         },
         
         _create: function() {
-            var el = this.element, o = this.options, list;
+            var self = this, el = self.element, o = self.options, list;
 
             if ( o.wrap )
                 el.wrap("<div />").parent( ).addClass("ui-dropdown-menu");
@@ -191,10 +172,11 @@ var jQueryUIExtra = function() {
         },
 
         _destroy: function() {
-            if ( this.options.wrap )
+            var self = this;
+            if ( self.options.wrap )
             {
-                var wrapper = this.element.parent( );
-                this.element.unwrap( );
+                var wrapper = self.element.parent( );
+                self.element.unwrap( );
                 wrapper.remove( );
             }
         }
@@ -202,130 +184,152 @@ var jQueryUIExtra = function() {
 
 }(jQuery, jQueryUIExtra);!function($, $UI, undef) {
 
-    $.widget( $UI.NS("radio"), {
-        
-        options: {
-            classes: {
-                radio: "ui-radio",
-                label: "ui-radio"
-            }
-        },
-        
-        _create: function() {
-            var el = this.element, o = this.options;
-
-            el.addClass(o.classes.radio).after('<label for="'+el.attr('id')+'" class="'+o.classes.label+'">&nbsp;</label>');
-        },
-
-        _destroy: function() {
-            var o = this.options;
-
-            this.element.removeClass(o.classes.radio).next().remove();
-        }
-    });
+    var CHECKBOX = 1, RADIO = 2, SWITCH = 4, PUSH = 8;
     
     $.widget( $UI.NS("checkbox"), {
         
-        options: {
-            classes: {
-                checkbox: "ui-checkbox",
-                label: "ui-checkbox"
+        _cbtype: null,
+        _classes: null,
+        _wrapper: null,
+        
+        _create: function( ) {
+            var self=  this, el = self.element, name, type;
+            
+            type = 'radio' === el.attr('type') ? RADIO : CHECKBOX;
+            if ( el.hasClass('ui-switch-button') ) type |= SWITCH;
+            if ( el.hasClass('ui-push-button') ) type |= PUSH;
+            self._cbtype = type;
+            
+            if ( !el.attr("id") ) el.attr( "id", $UI.UUID() );
+            name = self._wID = el.attr( "id" );
+                
+            if ( SWITCH & type )
+            {
+                self._wrapper = el
+                    .wrap('<span />').parent( )
+                    .addClass("ui-switch")
+                    .append($('<label for="'+name+'" class="'+"ui-switch-off"+'">'+"OFF"+'</label><label for="'+name+'" class="'+"ui-switch-on"+'">'+"ON"+'</label><span class="'+"ui-switch-handle ui-state-default"+'"></span>'))
+                ;
+            }
+            else
+            {
+                if ( RADIO & type ) self._classes = 'ui-radio';
+                else self._classes = 'ui-checkbox';
+                el.addClass( self._classes ).after($('<label for="'+name+'">&nbsp;</label>'));
             }
         },
-        
-        _create: function() {
-            var el = this.element, o = this.options;
 
-            el.addClass(o.classes.checkbox).after('<label for="'+el.attr('id')+'" class="'+o.classes.label+'">&nbsp;</label>');
-        },
-
-        _destroy: function() {
-            var o = this.options;
-
-            this.element.removeClass(o.classes.checkbox).next().remove();
+        _destroy: function( ) {
+            var self = this;
+            if ( SWITCH & self._cbtype )
+            {
+                self.element.unwrap( );
+                self._wrapper.remove( );
+            }
+            else
+            {
+                self.element.removeClass( self._classes ).next( ).remove( );
+            }
+            self._classes = null;
+            self._wrapper = null;
         }
     });
 
 }(jQuery, jQueryUIExtra);!function($, $UI, undef) {
 
-    $.widget( $UI.NS("switcher"), {
+    function tooltipContent( ) 
+    {
+        var el = $( this );
+        if ( el.is( "[data-reftooltip]" ) ) 
+        {
+            return $( el.data( "reftooltip" ) ).html();
+        }
+        else if ( el.is( "[data-tooltip]" ) ) 
+        {
+            return el.data( "tooltip" );
+        }
+        else //if ( el.is( "[title]" ) ) 
+        {
+            return el.attr( "title" );
+        }
+    }
+    
+    function tooltipPosition( type ) 
+    {
+        switch(type)
+        {
+            case 'top': 
+                return {
+                    my: "center bottom-15",
+                    at: "center top",
+                    using: function( position, feedback ) {
+                        $( this ).css( position ).css({'z-index': 2000});
+                        $( "<div>" )
+                        .addClass( "tip-arrow tip-arrow-bottom" )
+                        .addClass( feedback.vertical )
+                        .addClass( feedback.horizontal )
+                        .appendTo( this );
+                    }
+                };
+            case 'bottom':
+                return {
+                    my: "center top+15",
+                    at: "center bottom",
+                    using: function( position, feedback ) {
+                        $( this ).css( position ).css({'z-index': 2000});
+                        $( "<div>" )
+                        .addClass( "tip-arrow tip-arrow-top" )
+                        .addClass( feedback.vertical )
+                        .addClass( feedback.horizontal )
+                        .appendTo( this );
+                    }
+                };
+            case 'left':
+                return {
+                    my: "right-15 center",
+                    at: "left center",
+                    using: function( position, feedback ) {
+                        $( this ).css( position ).css({'z-index': 2000});
+                        $( "<div>" )
+                        .addClass( "tip-arrow tip-arrow-right" )
+                        .addClass( feedback.vertical )
+                        .addClass( feedback.horizontal )
+                        .appendTo( this );
+                    }
+                };
+            case 'right':
+            default:
+                return {
+                    my: "left+15 left",
+                    at: "right center",
+                    using: function( position, feedback ) {
+                        $( this ).css( position ).css({'z-index': 2000});
+                        $( "<div>" )
+                        .addClass( "tip-arrow tip-arrow-left" )
+                        .addClass( feedback.vertical )
+                        .addClass( feedback.horizontal )
+                        .appendTo( this );
+                    }
+                };
+        }
+    }
+    
+   $.widget( $UI.NS("tooltip2"), $.ui.tooltip, {
         
-        options: {
-            labels: {
-                ON: "ON",
-                OFF: "OFF"
-            },
-            classes: {
-                wrapper: "ui-switch",
-                state: "ui-switch-state",
-                ON: "ui-switch-on",
-                OFF: "ui-switch-off",
-                handle: "ui-switch-handle ui-state-default"
-            }
-            //,onchange: null
-        },
-        
-        _state: null,
-        _isON: false,
-        
-        _create: function() {
-            var wrapper, state, labels, name, o = this.options;
-            
-            state = this._state = this.element;
-            state.addClass(o.classes.state).attr('value', '1');
-            name = this._wID = state.attr( "id" );
-            this._isON = state.is(':checked');
-            
-            wrapper = this.element = this.element.wrap('<span />').parent().addClass(o.classes.wrapper);
-            
-            labels = $('<label for="'+name+'" class="'+o.classes.OFF+'">'+o.labels.OFF+'</label><label for="'+name+'" class="'+o.classes.ON+'">'+o.labels.ON+'</label><span class="'+o.classes.handle+'"></span>');
-            wrapper.append(labels);
-            
-            this._bindHandlers();
-        },
-        
-        _handleChange: function(event) {
-            if ( !event.isDefaultPrevented() ) 
-            {
-                var state = this._isON = !!this._state.is(':checked');
-                //this._trigger('onchange', event, { state: state});
-            }
-        },
-        
-        _bindHandlers: function() {
-            this._on( this._state, {
-                "change": "_handleChange"
-            });
-        },
-        
-        val: function(v) {
-            if ( 'undefined' == typeof(v) )
-            {
-                return this._isON;
-            }
-            else
-            {
-                if (v) 
-                {
-                    this._state.attr('checked', true);
-                    this._isON = true;
-                }
-                else  
-                {
-                    this._state.removeAttr('checked');
-                    this._isON = false;
-                }
-            }
-        },
-        
-        toggle: function() {
-            this._state.trigger('click');
-        },
+        _create: function( ) {
+            var self = this, el = self.element, o = self.options, selectors = "[data-tooltip],[data-reftooltip],[title]";
 
-        _destroy: function() {
-            this._off( this._state, "change");
-            this._state.unwrap();
-            this.element.remove();
+            o.items = selectors;
+            o.content = tooltipContent;
+            if ( el.hasClass('has-tooltip-top') )
+                o.position = tooltipPosition('top');
+            else if ( el.hasClass('has-tooltip-bottom') )
+                o.position = tooltipPosition('bottom');
+            else if ( el.hasClass('has-tooltip-left') )
+                o.position = tooltipPosition('left');
+            else /*if ( el.hasClass('has-tooltip-right') )*/
+                o.position = tooltipPosition('right');
+            this._super( );
         }
     });
 
@@ -333,132 +337,96 @@ var jQueryUIExtra = function() {
 
     $.widget( $UI.NS("disabable"), {
         
-        options: {
-            classes: {
-                overlay: "ui-disabable"
-            },
-            duration: 400,
-            easing: 'linear',
-            oncomplete: null
-        },
+        options: { },
         
         _overlay: null,
         _isDisabled: false,
         
         _create: function() {
-            var o = this.options;
-            this._overlay = $('<div />').addClass(o.classes.overlay).css(this._getStyles());
-            this.element.append(this._overlay);
+            var self = this;
+            self.element.append(self._overlay = $('<div />').addClass('ui-disabable'));
         },
 
         enableIt: function() {
-            var self = this, o = self.options;
+            var self = this;
             if ( self._isDisabled )
             {
-                self._overlay.animate(self._getEnabledStyles(), o.duration, o.easing, function(e){
+                self.element.removeClass('ui-disabled').addClass('ui-enabled');
+                self._isDisabled = false;
+                /*self._overlay.animate(self._getEnabledStyles(), o.duration, o.easing, function(e){
                     self._overlay.css({display: 'none'});
                     self._trigger('oncomplete', e, { state: self._isDisabled=false});
-                });
+                });*/
             }
         },
         
-        disableIt: function() {
-            var self = this, o = self.options;
+        disableIt: function( ) {
+            var self = this;
             if ( !self._isDisabled )
             {
-                self._overlay.css({display: 'block'});
-                self._overlay.animate(self._getDisabledStyles(), o.duration, o.easing, function(e){
+                self.element.removeClass('ui-enabled').addClass('ui-disabled');
+                self._isDisabled = true;
+                /*self._overlay.animate(self._getDisabledStyles(), o.duration, o.easing, function(e){
                     self._trigger('oncomplete', e, { state: self._isDisabled=true});
-                });
+                });*/
             }
         },
         
-        _getStyles: function() {
-            return {
-                position: 'absolute',
-                padding: 0,
-                margin: 0,
-                top: 0,
-                left: 0,
-                display: 'none',
-                width: '100%',
-                height: '100%',
-                opacity: 0
-            };
-        },
-        
-        _getEnabledStyles: function() {
-            return {
-                opacity: 0
-            };
-        },
-        
-        _getDisabledStyles: function() {
-            return {
-                opacity: 1
-            };
+        toggle: function( ) {
+            var self = this;
+            if ( self._isDisabled ) self.enableIt( );
+            else self.disableIt( );
         },
         
         _destroy: function() {
-            this._overlay.remove();
+            this._overlay.remove( );
+            this._overlay = null;
         }
     });
 
-}(jQuery, jQueryUIExtra);!function($, $UI, undef) {
-
     $.widget( $UI.NS("delayable"), {
         
-        options: {
-            classes: {
-                overlay: "ui-delayable"
-            }
-        },
+        options: {},
         
         _overlay: null,
         _isVisible: false,
         
         _create: function() {
-            var o = this.options;
-            this._overlay = $('<div />').addClass(o.classes.overlay).css(this._getStyles());
-            this.element.append(this._overlay);
+            var self = this;
+            self._overlay = $('<div />').addClass("ui-delayable").append($('<div />').addClass("ui-spinner"));
+            self.element.append( self._overlay );
         },
 
         enableIt: function() {
-            var self = this, o = self.options;
+            var self = this;
             if ( !self._isVisible )
             {
-                self._overlay.css({display: 'block'});
+                self.element.removeClass('ui-undelayed').addClass('ui-delayed');
                 self._isVisible = true;
             }
         },
         
         disableIt: function() {
-            var self = this, o = self.options;
+            var self = this;
             if ( self._isVisible )
             {
-                self._overlay.css({display: 'none'});
+                self.element.removeClass('ui-delayed').addClass('ui-undelayed');
                 self._isVisible = false;
             }
         },
         
-        _getStyles: function() {
-            return {
-                position: 'absolute',
-                padding: 0,
-                margin: 0,
-                top: 0,
-                left: 0,
-                display: 'none',
-                width: '100%',
-                height: '100%'
-            };
+        toggle: function( ) {
+            var self = this;
+            if ( self._isVisible ) self.disableIt( );
+            else self.enableIt( );
         },
         
         _destroy: function() {
-            this._overlay.remove();
+            this._overlay.remove( );
+            this._overlay = null;
         }
     });
-
+    
 }(jQuery, jQueryUIExtra);!function($, $UI, undef) {
 
     $.widget( $UI.NS("removable"), {
@@ -481,21 +449,21 @@ var jQueryUIExtra = function() {
         _handle: null,
         
         _create: function() {
-            var o = this.options;
+            var self = this, o = self.options;
             
             if ( o.wrap )
-                this._wrapper = this.element.wrap('<div />').parent().addClass( o.classes.wrapper );
+                self._wrapper = self.element.wrap('<div />').parent().addClass( o.classes.wrapper );
             else
-                this._wrapper = this.element.addClass( o.classes.wrapper );
+                self._wrapper = self.element.addClass( o.classes.wrapper );
             
-            this._handle = $('<button />').addClass( o.classes.handle );
+            self._handle = $('<button />').addClass( o.classes.handle );
             
             if ( o.icon )
-                this._handle.addClass(['ui-icon', o.icon].join(' '));
+                self._handle.addClass(['ui-icon', o.icon].join(' '));
             
-            this._wrapper.append( this._handle );
+            self._wrapper.append( self._handle );
             
-            this._on(this._handle, {
+            self._on(self._handle, {
                 'click' : '_removeItHandler'
             });
         },
@@ -507,7 +475,7 @@ var jQueryUIExtra = function() {
         
         _removeIt: function( event ) {
             var self = this, o = self.options;
-            this._wrapper.fadeOut(o.duration, o.easing, function(){
+            self._wrapper.fadeOut(o.duration, o.easing, function(){
                 if ( o.autoremove )
                     self._wrapper.remove();
                 self._trigger('onremove', event||null, { target: self.element } );
@@ -519,12 +487,13 @@ var jQueryUIExtra = function() {
         },
         
         _destroy: function() {
-            this._off(this._handle, 'click');
-            this._handle.remove();
-            if ( this.options.wrap )
+            var self = this.
+            self._off(self._handle, 'click');
+            self._handle.remove();
+            if ( self.options.wrap )
             {
-                this.element.unwrap();
-                this._wrapper.remove();
+                self.element.unwrap();
+                self._wrapper.remove();
             }
         }
     });
@@ -546,11 +515,11 @@ var jQueryUIExtra = function() {
         _button: null,
         
         _create: function() {
-            var el = this.element, o = this.options, self = this;
+            var self = this, el = self.element, o = self.options;
 
             el.css({position: "absolute", display: "none"});
             
-            var button = this._button = $('<button></button>')
+            var button = self._button = $('<button></button>')
                                             .addClass( o.classes.button )
                                             .button({
                                                 icons: {
@@ -560,12 +529,12 @@ var jQueryUIExtra = function() {
                                                 text: !!(el.attr('title') || el.data('title') || el.data('value') || o.text)
                                             })
                                         ;
-            this._on( el, {
+            self._on( el, {
             "change": function( event ) {
                 //event.preventDefault();
                 self._handleUpload(event);
             }});            
-            this._on( button, {
+            self._on( button, {
             "click": function( event ) {
                 event.preventDefault();
                 el.trigger('click');
@@ -575,7 +544,7 @@ var jQueryUIExtra = function() {
         },
 
         _handleUpload: function(event) {
-            var o = this.options, self = this;
+            var self = this, o = self.options;
             var file = event.target.files[0] || null; //FileList object
             
             if ( !file || !file.type.match(o.fileType) )   return false;
@@ -591,9 +560,10 @@ var jQueryUIExtra = function() {
         },
         
         _destroy: function() {
-            this._off( this._button, "click");            
-            this._button.remove().destroy();
-            this._off( this.element.css({position: 'relative', display: 'inline'}), "change");            
+            var self = this;
+            self._off( self._button, "click");            
+            self._button.remove().destroy();
+            self._off( self.element.css({position: 'relative', display: 'inline'}), "change");            
         }
     });
 
@@ -636,12 +606,12 @@ var jQueryUIExtra = function() {
         _height: 0,
         
         _create: function() {
-            var self = this, el, items, wrapper, o = this.options;
+            var self = this, el, items, wrapper, o = self.options;
             
-            el = this.element.addClass( o.classes.wrapper );
+            el = self.element.addClass( o.classes.wrapper );
             if ( !el.children().length )
             {
-                this._wrapper = $('<div />')
+                self._wrapper = $('<div />')
                                 .addClass( o.classes.scroll )
                                 .addClass( o.classes.scroll+"-"+o.direction )
                                 .appendTo( el )
@@ -655,14 +625,14 @@ var jQueryUIExtra = function() {
                                     .parent()
                                     .addClass( o.classes.item );
                         });
-                this._wrapper = items.wrapAll('<div />')
+                self._wrapper = items.wrapAll('<div />')
                                 .parent()
                                 .addClass( o.classes.scroll )
                                 .addClass( o.classes.scroll+"-"+o.direction )
                             ;
             }
-            this._current = 0;
-            this.update();
+            self._current = 0;
+            self.update();
             
             /*    
             var doNext = function() {
@@ -677,81 +647,84 @@ var jQueryUIExtra = function() {
             if ( o.controls )
             {
                 if ( o.controls.next )
-                    this._on(o.controls.next, {
+                    self._on(o.controls.next, {
                         "click" : "next"
                     });
                 if ( o.controls.prev )
-                    this._on(o.controls.prev, {
+                    self._on(o.controls.prev, {
                         "click" : "prev"
                     });
             }
         },
         
         addItem: function(item) {
-            var el = item.wrap( '<div />' ).parent( ).addClass( this.options.classes.item );
-            this._wrapper.append( el );
-            this.update( );
+            var self = this, el = item.wrap( '<div />' ).parent( ).addClass( self.options.classes.item );
+            self._wrapper.append( el );
+            self.update( );
             return el;
         },
         
         removeItem: function(item) {
+            var self = this;
             if ( undef !== item )
             {
                 if ( item.jquery )
-                    this._wrapper.find( item.parent() ).remove( );
+                    self._wrapper.find( item.parent() ).remove( );
                 else
-                    this._wrapper.children( ).eq( item ).remove( );
-                this.update( );
+                    self._wrapper.children( ).eq( item ).remove( );
+                self.update( );
             }
         },
         
         update: function() {
-            var o = this.options, d, n;
-            d = this._dir = DIRECTION[o.direction] || 1;
-            this._items = this._wrapper.children();
-            n = this._nItems = this._items.length;
+            var self = this, o = self.options, d, n;
+            d = self._dir = DIRECTION[o.direction] || 1;
+            self._items = self._wrapper.children();
+            n = self._nItems = self._items.length;
             
             if ( 2 == d || -2 == d )
             {
-                this._height = n*100;
-                this._wrapper.css({height: this._height+'%'});
+                self._height = n*100;
+                self._wrapper.css({height: self._height+'%'});
             }
             else
             {
-                this._width = n*100;
-                this._wrapper.css({width: this._width+'%'});
+                self._width = n*100;
+                self._wrapper.css({width: self._width+'%'});
             }
             
-            if (this._current > n)
+            if (self._current > n)
             {
-                this._current = Max(0, n -1 - o.scrollby);
-                this.scrollTo( this._current );
+                self._current = Max(0, n -1 - o.scrollby);
+                self.scrollTo( self._current );
             }
         },
         
         next: function() {
-            if ( this._dir > 0 && this._current < this._nItems )
+            var self = this;
+            if ( self._dir > 0 && self._current < self._nItems )
             {
-                this._current += this.options.scrollby;
-                this.scrollTo( this._current );
+                self._current += self.options.scrollby;
+                self.scrollTo( self._current );
             }
-            else if ( this._dir < 0 && this._current > 0 )
+            else if ( self._dir < 0 && self._current > 0 )
             {
-                this._current -= this.options.scrollby;
-                this.scrollTo( this._current );
+                self._current -= self.options.scrollby;
+                self.scrollTo( self._current );
             }
         },
         
         prev: function() {
-            if ( this._dir > 0 && this._current > 0 )
+            var self = this;
+            if ( self._dir > 0 && self._current > 0 )
             {
-                this._current -= this.options.scrollby;
-                this.scrollTo( this._current );
+                self._current -= self.options.scrollby;
+                self.scrollTo( self._current );
             }
-            else if ( this._dir < 0 && this._current < this._nItems )
+            else if ( self._dir < 0 && self._current < self._nItems )
             {
-                this._current += this.options.scrollby;
-                this.scrollTo( this._current );
+                self._current += self.options.scrollby;
+                self.scrollTo( self._current );
             }
         },
         
@@ -790,264 +763,18 @@ var jQueryUIExtra = function() {
         },
         
         _destroy: function() {
-            var o = this.options;
+            var self = this, o = self.options;
             
             if ( o.controls )
             {
                 if ( o.controls.next )
-                    this._off(o.controls.next, "click");
+                    self._off(o.controls.next, "click");
                 if ( o.controls.prev )
-                    this._off(o.controls.prev, "click");
+                    self._off(o.controls.prev, "click");
             }
-            this.element.removeClass( o.classes.wrapper );
-            this._wrapper.children('.'+o.classes.item).unwrap();
-            this._wrapper.remove();
-        }
-    });
-
-}(jQuery, jQueryUIExtra);!function($, $UI, undef) {
-
-     $.widget( $UI.NS("panel"), {
-        options: {
-            classes: {
-                panel: "ui-panel ui-widget",
-                open: "ui-panel-open",
-                closed: "ui-panel-closed",
-                inner: "ui-panel-inner ui-widget-content",
-                overlay: "ui-panel-overlay",
-                header: "ui-panel-header ui-widget-header",
-                icon: null,
-                animate: "ui-panel-animate",
-                _headerClass: "panel-header",
-                _innerClass: "panel-inner"
-            },
-            //fx: null,
-            easingOpen: 'easeInQuint',
-            easingClose: 'easeInQuint',
-            durationOpen: 'fast',
-            durationClose: 'fast',
-            collapsible: true,
-            animate: true,
-            animateWithCSS: false,
-            theme: null
-        },
-
-        _panelID: null,
-        _toggleLink: null,
-        _panelHeader: null,
-        _panelInner: null,
-        // state storage of open or closed
-        _open: true,
-
-        _create: function() {
-            var el = this.element, o = this.options;
-
-            var state = (el.data('uistate') || 'open').toLowerCase();
-            
-            // expose some private props to other methods
-            $.extend( this, {
-                _panelID: el.attr( "id" ),
-                _panelHeader: el.children('.'+o.classes._headerClass+':eq(0)').addClass(o.classes.header),
-                _panelInner: this._getPanelInner()
-            });
-            this._toggleLink = $('<a href="#"></a>')
-                               .css({
-                                    'z-index': 100,
-                                    'display': 'block',
-                                    'position': 'absolute',
-                                    'padding': '0px',
-                                    'margin': '0px',
-                                    'top': '0px',
-                                    'left': '0px',
-                                    'width': '100%',
-                                    'height': '100%'
-                               });
-            
-            if ( o.classes.icon || el.data('icon') )
-                this._panelHeader.prepend( $('<span />').addClass( ['ui-icon', o.classes.icon || el.data('icon')].join(' ') ).css({display: 'inline-block'}) );
-                
-            this._panelHeader.append( this._toggleLink );
-            
-            el.addClass( this._getPanelClasses() );
-
-            // if animating, add the class to do so
-            if ( !!o.animate && !!o.animateWithCSS /*&& $.support.cssTransform3d*/ )
-            {
-                this._panelInner.addClass( o.classes.animate );
-            }
-
-            if ( !!o.collapsible )
-            {
-                this._bindToggleEvents();
-            }
-            
-            if ( 'closed' == state ) this.close();
-        },
-
-        _getPanelInner: function() {
-            var o = this.options, el = this.element;
-            var panelInner = this.element.children( "." + o.classes._innerClass );
-
-            if ( 0 === panelInner.length ) 
-            {
-                panelInner = el.children().not("." + o.classes.headerClass+":eq(0)").wrapAll( "<div />" ).parent();
-            }
-            panelInner.addClass(o.classes.inner);
-            
-            if ( o.classes.overlay )
-                panelInner.children().wrapAll( "<div class='" + o.classes.overlay + "' />" );
-            
-            return panelInner;
-        },
-
-        _getPanelClasses: function() {
-            var o = this.options;
-            return [
-                o.classes.panel,
-                this._open ? o.classes.open : o.classes.closed,
-                "ui-body-" + ( o.theme ? o.theme : "inherit" )
-            ].join(" ");
-        },
-
-        _handleCloseClickAndEatEvent: function( event ) {
-            if ( !event.isDefaultPrevented() ) 
-            {
-                event.preventDefault();
-                this.close();
-                return false;
-            }
-        },
-
-        _handleCloseClick: function( event ) {
-            if ( !event.isDefaultPrevented() ) 
-            {
-                this.close();
-            }
-        },
-
-        _handleToggleClick: function( event ) {
-            if ( !event.isDefaultPrevented() ) 
-            {
-                event.preventDefault( );
-                this[ this._open ? "close" : "open" ]();
-            }
-        },
-
-        _bindToggleEvents: function() {
-            this._on( this._toggleLink, {
-                "click": "_handleToggleClick"
-            });
-        },
-        /*
-        _bindSwipeEvents: function() {
-            var self = this,
-                area = self._modal ? self.element.add( self._modal ) : self.element;
-
-            // on swipe, close the panel
-            if ( !!self.options.swipeClose ) {
-                if ( self.options.position === "left" ) {
-                    area.on( "swipeleft.panel", function(/* e * /) {
-                        self.close();
-                    });
-                } else {
-                    area.on( "swiperight.panel", function(/* e * /) {
-                        self.close();
-                    });
-                }
-            }
-        },
-        */
-
-        open: function( immediate ) {
-            if ( !this._open ) 
-            {
-                var self = this,
-                    o = self.options,
-
-                    _openPanel = function() {
-
-                        if ( !immediate && !!o.animate ) 
-                        {
-                            if ( !!o.animateWithCSS /*&& $.support.cssTransform3d*/ )
-                                self._panelInner.one($UI.transitionEvent, complete );
-                            else
-                                self._panelInner.slideFadeDown( o.durationOpen, o.easingOpen, complete );
-                        } 
-                        else 
-                        {
-                            setTimeout( complete, 0 );
-                        }
-                        
-                        self.element
-                            .removeClass( o.classes.closed )
-                            .addClass( o.classes.open );
-
-                    },
-                    complete = function() {
-
-                        self._trigger( "open" );
-                    };
-
-                _openPanel();
-                
-                self._open = true;
-            }
-        },
-
-        close: function( immediate ) {
-            if ( this._open ) 
-            {
-                var self = this,
-                    o = this.options,
-
-                    _closePanel = function() {
-
-                        if ( !immediate && !!o.animate ) 
-                        {
-                            if ( !!o.animateWithCSS /*&& $.support.cssTransform3d*/ )
-                                self._panelInner.one($UI.transitionEvent, complete );
-                            else
-                                self._panelInner.slideFadeUp( o.durationClose, o.easingClose, complete );
-                        } 
-                        else 
-                        {
-                            setTimeout( complete, 0 );
-                        }
-                        
-                        self.element
-                            .removeClass( o.classes.open )
-                            .addClass( o.classes.closed );
-                    },
-                    complete = function() {
-
-                        self._trigger( "close" );
-                    };
-
-                _closePanel();
-
-                self._open = false;
-            }
-        },
-
-        toggle: function() {
-            this[ this._open ? "close" : "open" ]();
-        },
-
-        _destroy: function() {
-            var o = this.options;
-
-            this._off( this._toggleLink, "click" );
-            this._toggleLink.remove();
-            
-            this._panelInner.children().unwrap();
-
-            this.element
-                .removeClass( [ this._getPanelClasses(), o.classes.animate ].join( " " ) )
-                /*.off( "swipeleft.panel swiperight.panel" )
-                .off( "panelbeforeopen" )
-                .off( "panelhide" )
-                .off( "keyup.panel" )*/
-            ;
+            self.element.removeClass( o.classes.wrapper );
+            self._wrapper.children('.'+o.classes.item).unwrap();
+            self._wrapper.remove();
         }
     });
 

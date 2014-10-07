@@ -37,12 +37,12 @@
         _height: 0,
         
         _create: function() {
-            var self = this, el, items, wrapper, o = this.options;
+            var self = this, el, items, wrapper, o = self.options;
             
-            el = this.element.addClass( o.classes.wrapper );
+            el = self.element.addClass( o.classes.wrapper );
             if ( !el.children().length )
             {
-                this._wrapper = $('<div />')
+                self._wrapper = $('<div />')
                                 .addClass( o.classes.scroll )
                                 .addClass( o.classes.scroll+"-"+o.direction )
                                 .appendTo( el )
@@ -56,14 +56,14 @@
                                     .parent()
                                     .addClass( o.classes.item );
                         });
-                this._wrapper = items.wrapAll('<div />')
+                self._wrapper = items.wrapAll('<div />')
                                 .parent()
                                 .addClass( o.classes.scroll )
                                 .addClass( o.classes.scroll+"-"+o.direction )
                             ;
             }
-            this._current = 0;
-            this.update();
+            self._current = 0;
+            self.update();
             
             /*    
             var doNext = function() {
@@ -78,81 +78,84 @@
             if ( o.controls )
             {
                 if ( o.controls.next )
-                    this._on(o.controls.next, {
+                    self._on(o.controls.next, {
                         "click" : "next"
                     });
                 if ( o.controls.prev )
-                    this._on(o.controls.prev, {
+                    self._on(o.controls.prev, {
                         "click" : "prev"
                     });
             }
         },
         
         addItem: function(item) {
-            var el = item.wrap( '<div />' ).parent( ).addClass( this.options.classes.item );
-            this._wrapper.append( el );
-            this.update( );
+            var self = this, el = item.wrap( '<div />' ).parent( ).addClass( self.options.classes.item );
+            self._wrapper.append( el );
+            self.update( );
             return el;
         },
         
         removeItem: function(item) {
+            var self = this;
             if ( undef !== item )
             {
                 if ( item.jquery )
-                    this._wrapper.find( item.parent() ).remove( );
+                    self._wrapper.find( item.parent() ).remove( );
                 else
-                    this._wrapper.children( ).eq( item ).remove( );
-                this.update( );
+                    self._wrapper.children( ).eq( item ).remove( );
+                self.update( );
             }
         },
         
         update: function() {
-            var o = this.options, d, n;
-            d = this._dir = DIRECTION[o.direction] || 1;
-            this._items = this._wrapper.children();
-            n = this._nItems = this._items.length;
+            var self = this, o = self.options, d, n;
+            d = self._dir = DIRECTION[o.direction] || 1;
+            self._items = self._wrapper.children();
+            n = self._nItems = self._items.length;
             
             if ( 2 == d || -2 == d )
             {
-                this._height = n*100;
-                this._wrapper.css({height: this._height+'%'});
+                self._height = n*100;
+                self._wrapper.css({height: self._height+'%'});
             }
             else
             {
-                this._width = n*100;
-                this._wrapper.css({width: this._width+'%'});
+                self._width = n*100;
+                self._wrapper.css({width: self._width+'%'});
             }
             
-            if (this._current > n)
+            if (self._current > n)
             {
-                this._current = Max(0, n -1 - o.scrollby);
-                this.scrollTo( this._current );
+                self._current = Max(0, n -1 - o.scrollby);
+                self.scrollTo( self._current );
             }
         },
         
         next: function() {
-            if ( this._dir > 0 && this._current < this._nItems )
+            var self = this;
+            if ( self._dir > 0 && self._current < self._nItems )
             {
-                this._current += this.options.scrollby;
-                this.scrollTo( this._current );
+                self._current += self.options.scrollby;
+                self.scrollTo( self._current );
             }
-            else if ( this._dir < 0 && this._current > 0 )
+            else if ( self._dir < 0 && self._current > 0 )
             {
-                this._current -= this.options.scrollby;
-                this.scrollTo( this._current );
+                self._current -= self.options.scrollby;
+                self.scrollTo( self._current );
             }
         },
         
         prev: function() {
-            if ( this._dir > 0 && this._current > 0 )
+            var self = this;
+            if ( self._dir > 0 && self._current > 0 )
             {
-                this._current -= this.options.scrollby;
-                this.scrollTo( this._current );
+                self._current -= self.options.scrollby;
+                self.scrollTo( self._current );
             }
-            else if ( this._dir < 0 && this._current < this._nItems )
+            else if ( self._dir < 0 && self._current < self._nItems )
             {
-                this._current += this.options.scrollby;
-                this.scrollTo( this._current );
+                self._current += self.options.scrollby;
+                self.scrollTo( self._current );
             }
         },
         
@@ -191,18 +194,18 @@
         },
         
         _destroy: function() {
-            var o = this.options;
+            var self = this, o = self.options;
             
             if ( o.controls )
             {
                 if ( o.controls.next )
-                    this._off(o.controls.next, "click");
+                    self._off(o.controls.next, "click");
                 if ( o.controls.prev )
-                    this._off(o.controls.prev, "click");
+                    self._off(o.controls.prev, "click");
             }
-            this.element.removeClass( o.classes.wrapper );
-            this._wrapper.children('.'+o.classes.item).unwrap();
-            this._wrapper.remove();
+            self.element.removeClass( o.classes.wrapper );
+            self._wrapper.children('.'+o.classes.item).unwrap();
+            self._wrapper.remove();
         }
     });
 

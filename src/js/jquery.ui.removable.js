@@ -20,21 +20,21 @@
         _handle: null,
         
         _create: function() {
-            var o = this.options;
+            var self = this, o = self.options;
             
             if ( o.wrap )
-                this._wrapper = this.element.wrap('<div />').parent().addClass( o.classes.wrapper );
+                self._wrapper = self.element.wrap('<div />').parent().addClass( o.classes.wrapper );
             else
-                this._wrapper = this.element.addClass( o.classes.wrapper );
+                self._wrapper = self.element.addClass( o.classes.wrapper );
             
-            this._handle = $('<button />').addClass( o.classes.handle );
+            self._handle = $('<button />').addClass( o.classes.handle );
             
             if ( o.icon )
-                this._handle.addClass(['ui-icon', o.icon].join(' '));
+                self._handle.addClass(['ui-icon', o.icon].join(' '));
             
-            this._wrapper.append( this._handle );
+            self._wrapper.append( self._handle );
             
-            this._on(this._handle, {
+            self._on(self._handle, {
                 'click' : '_removeItHandler'
             });
         },
@@ -46,7 +46,7 @@
         
         _removeIt: function( event ) {
             var self = this, o = self.options;
-            this._wrapper.fadeOut(o.duration, o.easing, function(){
+            self._wrapper.fadeOut(o.duration, o.easing, function(){
                 if ( o.autoremove )
                     self._wrapper.remove();
                 self._trigger('onremove', event||null, { target: self.element } );
@@ -58,12 +58,13 @@
         },
         
         _destroy: function() {
-            this._off(this._handle, 'click');
-            this._handle.remove();
-            if ( this.options.wrap )
+            var self = this.
+            self._off(self._handle, 'click');
+            self._handle.remove();
+            if ( self.options.wrap )
             {
-                this.element.unwrap();
-                this._wrapper.remove();
+                self.element.unwrap();
+                self._wrapper.remove();
             }
         }
     });

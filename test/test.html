@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="../build/jquery.ui.extra.css" />
+        <script src="./jquery.js"></script>
+        <script src="./jquery-ui.js"></script>
+        <script src="../build/jquery.ui.extra.js"></script>
+    </head>
+    <title>jQuery UI Extra Widgets test page</title>
+    <body>
+        <h1>jQuery UI Extra Widgets test page</h1>
+        
+        <hr />
+        <button class="button" id="toggle_disable">Enable/Disable</button>
+        <button class="button" id="toggle_delay">Progress On/Off</button>
+        
+        <div style="position:relative;width:200px" class="disabable delayable" id="disabable">
+            <p>sdvsdvkkjigikgege ergege ergegrer899yrgjkhgkjghkghrk hhrh
+            thrth
+            rhrhr
+            hrhrh5rjhrjtjrj
+            yjtjtjjtj
+            tyjtjt</p>
+            <p>sdvsdvkkjigikgege ergege ergegrer899yrgjkhgkjghkghrk hhrh
+            thrth
+            rhrhr
+            hrhrh5rjhrjtjrj
+            yjtjtjjtj
+            tyjtjt</p>
+            <p>sdvsdvkkjigikgege ergege ergegrer899yrgjkhgkjghkghrk hhrh
+            thrth
+            rhrhr
+            hrhrh5rjhrjtjrj
+            yjtjtjjtj
+            tyjtjt</p>
+        </div>
+        
+        <table><thead><tr>
+        <th>Control Type</th><th>Default State</th><th>Checked State</th><th>Disabled State</th>
+        </tr></thead><tbody>
+        
+        <tr>
+            <td>Checkbox</td>
+            <td><input name="cb1" type="checkbox" value="v1" /></td>
+            <td><input name="cb2" type="checkbox" checked value="v2" /></td>
+            <td><input name="cb3" type="checkbox" checked disabled value="v3" /></td>
+        </tr>
+        
+        <tr>
+            <td>Radio</td>
+            <td><input name="rd1" type="radio" value="v1" /></td>
+            <td><input name="rd1" type="radio" checked value="v2" /></td>
+            <td><input name="rd1" type="radio" disabled value="v3" /></td>
+        </tr>
+        
+        <tr>
+            <td>Checkbox (inset)</td>
+            <td><input name="cb21" type="checkbox" class="ui-inset fat-x-mark" value="v1" /></td>
+            <td><input name="cb22" type="checkbox" checked class="ui-inset fat-x-mark" value="v2" /></td>
+            <td><input name="cb23" type="checkbox" checked disabled class="ui-inset fat-x-mark" value="v3" /></td>
+        </tr>
+        
+        <tr>
+            <td>Radio (inset)</td>
+            <td><input name="rd21" type="radio" class="ui-inset fat-x-mark" value="v1" /></td>
+            <td><input name="rd21" type="radio" checked class="ui-inset fat-x-mark" value="v2" /></td>
+            <td><input name="rd21" type="radio" disabled class="ui-inset fat-x-mark" value="v3" /></td>
+        </tr>
+        
+        <tr>
+            <td>Checkbox (push)</td>
+            <td><input name="cb31" type="checkbox" class="ui-push-button" value="v1" /></td>
+            <td><input name="cb32" type="checkbox" checked class="ui-push-button" value="v2" /></td>
+            <td><input name="cb33" type="checkbox" checked disabled class="ui-push-button" value="v3" /></td>
+        </tr>
+        
+        <tr>
+            <td>Radio (push)</td>
+            <td><input name="rd31" type="radio" class="ui-push-button" value="v1" /></td>
+            <td><input name="rd31" type="radio" checked class="ui-push-button" value="v2" /></td>
+            <td><input name="rd31" type="radio" disabled class="ui-push-button" value="v3" /></td>
+        </tr>
+        
+        <tr>
+            <td>Checkbox (switch)</td>
+            <td><input name="cb41" type="checkbox" class="ui-switch-button" value="v1" /></td>
+            <td><input name="cb42" type="checkbox" checked class="ui-switch-button" value="v2" /></td>
+            <td><input name="cb43" type="checkbox" checked disabled class="ui-switch-button" value="v3" /></td>
+        </tr>
+        
+        <tr>
+            <td>Radio (switch)</td>
+            <td><input name="rd41" type="radio" class="ui-switch-button" value="v1" /></td>
+            <td><input name="rd41" type="radio" checked class="ui-switch-button" value="v2" /></td>
+            <td><input name="rd41" type="radio" disabled class="ui-switch-button" value="v3" /></td>
+        </tr>
+        
+        <tr>
+            <td>Checkbox (LED)</td>
+            <td><input name="cb51" type="checkbox" class="ui-led-button discus" value="v1" /></td>
+            <td><input name="cb52" type="checkbox" checked class="ui-led-button discus" value="v2" /></td>
+            <td><input name="cb53" type="checkbox" checked disabled class="ui-led-button discus" value="v3" /></td>
+        </tr>
+        
+        <tr>
+            <td>Radio (LED)</td>
+            <td><input name="rd51" type="radio" class="ui-led-button discus" value="v1" /></td>
+            <td><input name="rd51" type="radio" checked class="ui-led-button discus" value="v2" /></td>
+            <td><input name="rd51" type="radio" disabled class="ui-led-button discus" value="v3" /></td>
+        </tr>
+        
+        </tbody></table>
+        
+        <h4>Other Controls</h3><br />
+        <p>
+        <strong>Tooltips</strong><br />
+        <span class="has-tooltip has-tooltip-top" title="Top tooltip">tooltip top</span>
+        <span class="has-tooltip has-tooltip-bottom" title="Bottom tooltip">tooltip bottom</span>
+        <span class="has-tooltip has-tooltip-left" title="Left tooltip">tooltip left</span>
+        <span class="has-tooltip has-tooltip-right" title="Right tooltip">tooltip right</span>
+        </p>
+        
+        <p>
+        <strong>Dropdown Selectbox</strong><br />
+        <select class="dropdown">
+            <option value="v1">Val 1</option>
+            <option value="v2" selected>Val 2</option>
+        </select>
+        </p>
+        
+        <script type="text/javascript">
+            jQuery(function($){
+                $('.button').button( );
+                // switch(es), checkbox(es), radio(es)
+                $('input[type="checkbox"],input[type="radio"]').checkbox( );
+                // dropdown(s)
+                $('.dropdown').dropdown( );
+                // tooltip(s)
+                $('.has-tooltip').tooltip2( );
+                // disabable
+                $('.disabable').disabable( );
+                // delayable
+                $('.delayable').delayable( );
+                $('#toggle_disable').click(function(){
+                    $('#disabable').disabable( 'toggle' );
+                });
+                $('#toggle_delay').click(function(){
+                    $('#disabable').delayable( 'toggle' );
+                });
+            });
+        </script>
+    </body>
+</html>

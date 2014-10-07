@@ -13,12 +13,18 @@ var jQueryUIExtra = function() {
         
         NS = function(s) { return NAMESPACE + "." + s; },
         
+        _UUID = 0,
+        
+        UUID = function( NS ) {
+            return [NS||'UI', ++_UUID, new Date().getTime()].join('_');
+        },
+        
         whichTransitionEvent = function() {
             var t, te = null,
                 el = document.createElement('div'),
                 transitions = {
                     'transition'        :'transitionend',
-                    'msTransition'      : 'MSTransitionEnd',
+                    'msTransition'      :'MSTransitionEnd',
                     'OTransition'       :'oTransitionEnd',
                     'MozTransition'     :'transitionend',
                     'WebkitTransition'  :'webkitTransitionEnd'
@@ -39,6 +45,7 @@ var jQueryUIExtra = function() {
     
     return {
         NS: NS,
+        UUID: UUID,
         transitionEvent: whichTransitionEvent()
     };
 }();

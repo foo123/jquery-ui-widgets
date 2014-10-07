@@ -18,15 +18,15 @@
         _list: null,
         
         _create: function() {
-            var el = this.element, o = this.options, list;
+            var self = this, el = self.element, o = self.options, list;
 
             el.addClass(o.classes.select).wrap("<span />").parent().addClass(o.classes.wrapper);
             if ( o.replace )
             {
-                this._list = list = this._replace( el );
+                self._list = list = self._replace( el );
                 el.after( list );
                 el.addClass( o.classes.replaced );
-                this._bindHandlers();
+                self._bindHandlers();
             }
         },
 
@@ -78,14 +78,14 @@
         },
         
         _destroy: function() {
-            var o = this.options;
-            var wrapper = this.element.parent();
-            this.element.unwrap().removeClass([o.classes.select, o.classes.replaced].join(' '));
+            var self = this, o = self.options;
+            var wrapper = self.element.parent();
+            self.element.unwrap().removeClass([o.classes.select, o.classes.replaced].join(' '));
             if ( o.replace )
             {
-                this._off(this.element, 'mousedown');
-                this._off(this.element, 'focus');
-                this._list.remove();
+                self._off(self.element, 'mousedown');
+                self._off(self.element, 'focus');
+                self._list.remove();
             }
             wrapper.remove();
         }

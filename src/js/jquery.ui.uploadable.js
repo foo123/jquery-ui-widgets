@@ -15,11 +15,11 @@
         _button: null,
         
         _create: function() {
-            var el = this.element, o = this.options, self = this;
+            var self = this, el = self.element, o = self.options;
 
             el.css({position: "absolute", display: "none"});
             
-            var button = this._button = $('<button></button>')
+            var button = self._button = $('<button></button>')
                                             .addClass( o.classes.button )
                                             .button({
                                                 icons: {
@@ -29,12 +29,12 @@
                                                 text: !!(el.attr('title') || el.data('title') || el.data('value') || o.text)
                                             })
                                         ;
-            this._on( el, {
+            self._on( el, {
             "change": function( event ) {
                 //event.preventDefault();
                 self._handleUpload(event);
             }});            
-            this._on( button, {
+            self._on( button, {
             "click": function( event ) {
                 event.preventDefault();
                 el.trigger('click');
@@ -44,7 +44,7 @@
         },
 
         _handleUpload: function(event) {
-            var o = this.options, self = this;
+            var self = this, o = self.options;
             var file = event.target.files[0] || null; //FileList object
             
             if ( !file || !file.type.match(o.fileType) )   return false;
@@ -60,9 +60,10 @@
         },
         
         _destroy: function() {
-            this._off( this._button, "click");            
-            this._button.remove().destroy();
-            this._off( this.element.css({position: 'relative', display: 'inline'}), "change");            
+            var self = this;
+            self._off( self._button, "click");            
+            self._button.remove().destroy();
+            self._off( self.element.css({position: 'relative', display: 'inline'}), "change");            
         }
     });
 

@@ -6,7 +6,7 @@ A collection of simple, custom, useful widgets (in jQueryUI format) not included
 Most widgets are generic and themable by default (by including the relevant jquery-ui theme)
 others might need a little tweeking in the respective css.
 
-This is work in progress, although most widgets are already used in projects,
+This is **work in progress**, although most widgets are already used in projects,
 still some additional options or edits / styles are possible.
 
 
@@ -17,14 +17,13 @@ included in [components.css](https://github.com/foo123/components.css)
 **Included Widgets :**
 
 * panel    (custom collapsible panel)
-* uploadable  (style and handle upload of local/client-side files using File API)
-* dropdown  (custom-styled dropdown with minimal hassle and maximum compatibility)
-* switcher  (custom-styled checkbox as an (animated) switch with minimal hassle and maximum compatibility)
-* radio, checkbox  (custom-styled radio,checkbox with minimal hassle and maximum compatibility)
 * scrollable  (area which can animate/scroll its content by a fixed amount in various directions)
+* dropdown  (custom-styled dropdown with minimal hassle and maximum compatibility)
+* dropdown_menu  (custom-styled dropdown_menu with minimal hassle and maximum compatibility)
+* radio, checkbox, switch-button checkbox, push-button checkbox  (custom-styled radio,checkbox with minimal hassle and maximum compatibility)
+* uploadable  (style and handle upload of local/client-side files using File API)
 * removable  (element which can be "removed easily with a style")
-* disabable  ("disables" an area by overlaying a customizable screen)
-* delayable  ("delays" an area by overlaying a customizable timer/loader)
+* disabable/delayable  ("disables" an area by overlaying a customizable screen/"delays" an area by overlaying a customizable timer/loader)
 
 
 **Widgets API :**
@@ -53,21 +52,6 @@ included in [components.css](https://github.com/foo123/components.css)
             animateWithCSS: false
         });
         
-        // switch(es)
-        $('.switch').switcher({
-            labels: {
-                ON: "ON",
-                OFF: "OFF"
-            },
-            classes: {
-                wrapper: "ui-switch",
-                state: "ui-switch-state",
-                ON: "ui-switch-on",
-                OFF: "ui-switch-off",
-                handle: "ui-switch-handle ui-state-default"
-            }
-        });
-        
         // dropdown(s)
         $('.dropdown').dropdown({
             classes: {
@@ -83,24 +67,13 @@ included in [components.css](https://github.com/foo123/components.css)
         });
         
         // disabable(s)
-        $('.disabable').disabable({
-            classes: {
-                overlay: "ui-disabable"
-            },
-            duration: 400,
-            easing: 'linear',
-            oncomplete: function() { /* .. */ }
-        });
+        $('.disabable').disabable();
         // methods
         $('.disabable').disabable('enableIt');
         $('.disabable').disabable('disableIt');
         
         // delayable(s)
-        $('.delayable').delayable({
-            classes: {
-                overlay: "ui-delayable"
-            }
-        });
+        $('.delayable').delayable();
         // methods
         $('.delayable').delayable('enableIt');
         $('.delayable').delayable('disableIt');

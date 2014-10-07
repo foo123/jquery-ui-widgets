@@ -33,17 +33,17 @@
         _open: true,
 
         _create: function() {
-            var el = this.element, o = this.options;
+            var self = this, el = self.element, o = self.options;
 
             var state = (el.data('uistate') || 'open').toLowerCase();
             
             // expose some private props to other methods
-            $.extend( this, {
+            $.extend( self, {
                 _panelID: el.attr( "id" ),
                 _panelHeader: el.children('.'+o.classes._headerClass+':eq(0)').addClass(o.classes.header),
-                _panelInner: this._getPanelInner()
+                _panelInner: self._getPanelInner()
             });
-            this._toggleLink = $('<a href="#"></a>')
+            self._toggleLink = $('<a href="#"></a>')
                                .css({
                                     'z-index': 100,
                                     'display': 'block',
@@ -57,29 +57,29 @@
                                });
             
             if ( o.classes.icon || el.data('icon') )
-                this._panelHeader.prepend( $('<span />').addClass( ['ui-icon', o.classes.icon || el.data('icon')].join(' ') ).css({display: 'inline-block'}) );
+                self._panelHeader.prepend( $('<span />').addClass( ['ui-icon', o.classes.icon || el.data('icon')].join(' ') ).css({display: 'inline-block'}) );
                 
-            this._panelHeader.append( this._toggleLink );
+            self._panelHeader.append( self._toggleLink );
             
-            el.addClass( this._getPanelClasses() );
+            el.addClass( self._getPanelClasses() );
 
             // if animating, add the class to do so
             if ( !!o.animate && !!o.animateWithCSS /*&& $.support.cssTransform3d*/ )
             {
-                this._panelInner.addClass( o.classes.animate );
+                self._panelInner.addClass( o.classes.animate );
             }
 
             if ( !!o.collapsible )
             {
-                this._bindToggleEvents();
+                self._bindToggleEvents();
             }
             
-            if ( 'closed' == state ) this.close();
+            if ( 'closed' == state ) self.close();
         },
 
         _getPanelInner: function() {
-            var o = this.options, el = this.element;
-            var panelInner = this.element.children( "." + o.classes._innerClass );
+            var self = this, o = self.options, el = self.element;
+            var panelInner = self.element.children( "." + o.classes._innerClass );
 
             if ( 0 === panelInner.length ) 
             {
@@ -227,15 +227,15 @@
         },
 
         _destroy: function() {
-            var o = this.options;
+            var self = this, o = self.options;
 
-            this._off( this._toggleLink, "click" );
-            this._toggleLink.remove();
+            self._off( self._toggleLink, "click" );
+            self._toggleLink.remove();
             
-            this._panelInner.children().unwrap();
+            self._panelInner.children().unwrap();
 
-            this.element
-                .removeClass( [ this._getPanelClasses(), o.classes.animate ].join( " " ) )
+            self.element
+                .removeClass( [ self._getPanelClasses(), o.classes.animate ].join( " " ) )
                 /*.off( "swipeleft.panel swiperight.panel" )
                 .off( "panelbeforeopen" )
                 .off( "panelhide" )

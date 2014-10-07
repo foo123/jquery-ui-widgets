@@ -1,0 +1,404 @@
+input[type=radio].ui-radio,
+input[type=checkbox].ui-checkbox
+{
+    display: none !important;
+}
+
+input.ui-radio + label,
+input.ui-checkbox + label
+{
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    vertical-align: middle;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -ms-box-sizing:border-box;
+    -o-box-sizing:border-box;
+    box-sizing:border-box;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-right: 8px;
+    margin-left: 8px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    font-size: 16px;
+    font-family: sans-serif;
+    background-image: none;
+    background-repeat: no-repeat;
+    background-color: #fafafa;
+    border: 1px solid rgba(200,200,200,.9);
+    color: #121212;
+    border-radius: 15%;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    text-shadow: 0 1px rgba(255, 255, 255, 0.8);
+    text-align: center;
+    z-index: 1;
+}
+input.ui-radio + label:before,
+input.ui-checkbox + label:before
+{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    vertical-align: middle;
+    text-align: center;
+    cursor: inherit;
+    width: 100%;
+    font-size: 75%;
+    line-height: 150%;
+    font-family: inherit;
+    color: inherit;
+    border: 0;
+    background: none;
+    content: " ";
+    font-weight: bold;
+    z-index: 2;
+}
+input.ui-radio + label
+{
+    border-radius: 50%;
+}
+input.ui-radio + label:before
+{
+    border-radius: 50%;
+    margin-top:-1px;
+}
+input.ui-checkbox:disabled + label,
+input.ui-radio:disabled + label
+{
+    background-image: -webkit-linear-gradient(top, rgba(255,255,255,.6), rgba(255,255,255,.6));
+    background-image: -moz-linear-gradient(top, rgba(255,255,255,.6), rgba(255,255,255,.6));
+    background-image: -ms-linear-gradient(top, rgba(255,255,255,.6), rgba(255,255,255,.6));
+    background-image: -o-linear-gradient(top, rgba(255,255,255,.6), rgba(255,255,255,.6));
+    background-image: linear-gradient(to bottom, rgba(255,255,255,.6), rgba(255,255,255,.6));
+}
+input.ui-checkbox:disabled + label:before,
+input.ui-radio:disabled + label:before
+{
+    opacity: 0.6;
+}
+/* DEFAULT */
+input.ui-checkbox + label:before,
+input.ui-radio + label:before,
+/* HEAVY CHECK MARK */
+input.ui-checkbox.heavy-check-mark + label:before,
+input.ui-radio.heavy-check-mark + label:before
+{
+    content: "\2714";
+}
+/* HEAVY PLUS SIGN */
+input.ui-checkbox.heavy-plus-sign + label:before,
+input.ui-radio.heavy-plus-sign + label:before
+{
+    content: "\2795";
+}
+/* HEAVY cross */
+input.ui-checkbox.heavy-cross + label:before,
+input.ui-radio.heavy-cross + label:before
+{
+    content: "\271A";
+}
+/* fat x */
+input.ui-checkbox.fat-x-mark + label:before,
+input.ui-radio.fat-x-mark + label:before
+{
+    content: "\271A";
+    transform: rotate(45deg);
+}
+/* CROSS X MARK */
+input.ui-checkbox.cross-x-mark + label:before,
+input.ui-radio.cross-x-mark + label:before
+{
+    content: "\274C";
+}
+/* CHECK MARK */
+input.ui-checkbox.check-mark + label:before,
+input.ui-radio.check-mark + label:before
+{
+    content: "\2713";
+}
+/* MULT SIGN */
+input.ui-checkbox.mult-sign + label:before,
+input.ui-radio.mult-sign + label:before
+{
+    content: "\2715";
+}
+/* HEAVY MULT SIGN */
+input.ui-checkbox.heavy-mult-sign + label:before,
+input.ui-radio.heavy-mult-sign + label:before
+{
+    content: "\2716";
+}
+/* BALLOT X */
+input.ui-checkbox.ballot-x + label:before,
+input.ui-radio.ballot-x + label:before
+{
+    content: "\2717";
+}
+/* HEAVY BALLOT X */
+input.ui-checkbox.heavy-ballot-x + label:before,
+input.ui-radio.heavy-ballot-x + label:before
+{
+    content: "\2718";
+}
+/* LARGE SQUARE */
+input.ui-checkbox.square + label:before,
+input.ui-radio.square + label:before
+{
+    content: "\2B1B";
+}
+/* SMALL SQUARE */
+input.ui-checkbox.square-sm + label:before,
+input.ui-radio.square-sm + label:before
+{
+    content: "\25A0";
+}
+/* BLACK CIRCLE */
+input.ui-checkbox.discus + label:before,
+input.ui-radio.discus + label:before
+{
+    content: "\25CF";
+}
+input.ui-checkbox:not(.ui-push-button):not(.ui-led-button):not(:checked) + label:before,
+input.ui-radio:not(.ui-push-button):not(.ui-led-button):not(:checked) + label:before,
+input.ui-checkbox.empty-on-unchecked:not(:checked) + label:before,
+input.ui-radio.empty-on-unchecked:not(:checked) + label:before
+{
+    content: " ";
+}
+
+input.ui-radio.ui-inset:not(.ui-push-button) + label,
+input.ui-checkbox.ui-inset:not(.ui-push-button) + label
+{
+    background-color: #fefefe;
+    border: 1px solid rgba(0,0,0,.2);
+    box-shadow: 1px 1px rgba(0,0,0,.1) inset, 2px 2px rgba(0,0,0,.1) inset, 2px 2px rgba(0,0,0,.8) inset,
+                2px 2px 2px rgba(0,0,0,.3) inset;
+}
+input.ui-radio.ui-inset:not(.ui-push-button):checked + label,
+input.ui-checkbox.ui-inset:not(.ui-push-button):checked + label
+{
+    box-shadow: 1px 1px rgba(0,0,0,.1) inset, 2px 2px rgba(0,0,0,.1) inset, 2px 2px rgba(0,0,0,.8) inset,
+                2px 2px 3px rgba(0,0,0,.5) inset;
+}
+/* adapted from https://github.com/LeaVerou/regexplained demo page */
+input.ui-checkbox.ui-push-button + label,
+input.ui-radio.ui-push-button + label
+{
+    min-width: 1em;
+    line-height: 1;
+    background: none;
+    background-image: none;
+    background-color: #e0e0e0;
+    border: 1px solid rgba(0,0,0,.2);
+    color: #fff;
+    box-shadow: 0 1px hsla(0,0%,100%,.15) inset,
+                1px 1px hsl(30,20%,20%), 1px 1px hsl(30,20%,18%), 2px 2px hsl(30,20%,16%),
+                2px 2px 5px rgba(0,0,0,.5);
+    transform: translate(0, 0);
+    transition-duration: .1s;
+    transition-property: box-shadow, transform;
+}
+input.ui-checkbox.ui-push-button + label:before,
+input.ui-radio.ui-push-button + label:before
+{
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .9);
+}
+input.ui-checkbox.ui-push-button:checked + label,
+input.ui-radio.ui-push-button:checked + label
+{
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px hsl(30,20%,14%) inset, 2px 2px hsl(30,20%,16%) inset, 2px 2px hsl(30,20%,18%) inset,
+                2px 2px 5px rgba(0,0,0,.5) inset;
+}
+input.ui-checkbox.ui-led-button + label:before,
+input.ui-radio.ui-led-button + label:before
+{
+    color: rgba(255, 0, 0, .4);
+    text-shadow: 0px 0px 1px rgba(200, 0, 0, .8);
+    transition-duration: .2s;
+    transition-property: text-shadow, color;
+}
+input.ui-checkbox.ui-led-button:checked + label:before,
+input.ui-radio.ui-led-button:checked + label:before
+{
+    color: rgba(255, 0, 0, 1);
+    text-shadow: 0px 0px 100px rgba(200, 0, 0, .8);
+}
+
+/* sliding switch checkboxes */
+.ui-switch input.ui-switch-button 
+{
+    display: none !important;
+}
+.ui-switch {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    padding: 0;
+    margin: 0px 5px;
+    vertical-align: text-bottom;
+    line-height: 15px;
+    height: 15px;
+    width: 60px;
+    font-size: 10px;
+    color: transparent;
+    text-shadow: none;
+    background: none;
+    background-image: none;
+    background-color: #fff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    z-index: 1;
+}
+.ui-switch  label {
+    position: relative;
+    display: block;
+    z-index: 1;
+    padding: 0;
+    margin: 0;
+    outline: 0;
+    overflow: hidden;
+    
+    float: left;
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    line-height: inherit;
+    font-size: inherit;
+    
+    color: inherit;
+    text-shadow: inherit;
+    
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(50%,rgba(255,255,255,.3)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+    background-image: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,.1) 10%,rgba(255,255,255,.2) 50%,rgba(255,255,255,.1) 90%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+    background-image: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,.1) 10%, rgba(255,255,255,.2) 50%, rgba(255,255,255,.1) 90%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+    background-image: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,.1) 10%,rgba(255,255,255,.2) 50%, rgba(255,255,255,.1) 90%,rgba(255,255,255,0) 100%); /* IE10+ */
+    background-image: -o-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,.1) 10%,rgba(255,255,255,.2) 50%, rgba(255,255,255,.1) 90%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+    background-image: linear-gradient(to bottom,  rgba(255,255,255,0) 0%, rgba(255,255,255,.1) 10%,rgba(255,255,255,.2) 50%, rgba(255,255,255,.1) 90%,rgba(255,255,255,0) 100%); /* W3C */
+
+    -webkit-box-shadow: inset 0 0 2px 1px rgba(0,0,0,.4);
+    -moz-box-shadow: inset 0 0 2px 1px rgba(0,0,0,.4);
+    -ms-box-shadow: inset 0 0 2px 1px rgba(0,0,0,.4);
+    -o-box-shadow: inset 0 0 2px 1px rgba(0,0,0,.4);
+    box-shadow: inset 0 0 2px 1px rgba(0,0,0,.4);
+    
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+.ui-switch  label:focus,
+.ui-switch  label:active {
+    cursor: pointer;
+    outline: 0;
+}
+.ui-switch label.ui-switch-on {
+    background-color: green;
+}
+.ui-switch label.ui-switch-off {
+    background-color: red;
+}
+.ui-switch .ui-switch-handle {
+    display: block;
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    outline: 0;
+    z-index: 2;
+    
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(50%,rgba(255,255,255,.3)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+    background-image: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,.1) 10%,rgba(255,255,255,.2) 50%,rgba(255,255,255,.1) 90%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+    background-image: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,.1) 10%, rgba(255,255,255,.2) 50%, rgba(255,255,255,.1) 90%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+    background-image: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,.1) 10%,rgba(255,255,255,.2) 50%, rgba(255,255,255,.1) 90%,rgba(255,255,255,0) 100%); /* IE10+ */
+    background-image: -o-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,.1) 10%,rgba(255,255,255,.2) 50%, rgba(255,255,255,.1) 90%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+    background-image: linear-gradient(to bottom,  rgba(255,255,255,0) 0%, rgba(255,255,255,.1) 10%,rgba(255,255,255,.2) 50%, rgba(255,255,255,.1) 90%,rgba(255,255,255,0) 100%); /* W3C */
+    
+    background-color: #fafafa;
+    
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    cursor: pointer;
+    
+    top: 50%;
+    left: 0;
+    width: 50%;
+    height: 110%;
+    border-color: inherit;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-transform: translate(100%, -50%);
+    -moz-transform: translate(100%, -50%);
+    -ms-transform: translate(100%, -50%);
+    -o-transform: translate(100%, -50%);
+    transform: translate(100%, -50%);
+    -webkit-transition: -webkit-transform .25s ease-out;
+    -moz-transition: -moz-transform .25s ease-out;
+    -ms-transition: -ms-transform .25s ease-out;
+    -o-transition: -o-transform .25s ease-out;
+    transition: transform .25s ease-out;
+}
+.ui-switch input.ui-switch-button:checked  ~ .ui-switch-handle {
+    -webkit-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    -webkit-transition: -webkit-transform .25s ease-out;
+    -moz-transition: -moz-transform .25s ease-out;
+    -ms-transition: -ms-transform .25s ease-out;
+    -o-transition: -o-transform .25s ease-out;
+    transition: transform .25s ease-out;
+}
+.ui-switch input.ui-switch-button:disabled  ~ label.ui-switch-on, 
+.ui-switch input.ui-switch-button:disabled  ~ label.ui-switch-off
+{
+    opacity: 0.6;
+}
+.ui-switch input.ui-switch-button:disabled  ~ .ui-switch-handle
+{
+    background-color: #efefef;
+}

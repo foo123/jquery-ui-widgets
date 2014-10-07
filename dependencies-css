@@ -20,13 +20,12 @@ SRC =[]
     ./src/css/common.css
     ./src/css/jquery.ui.dropdown.css
     ./src/css/jquery.ui.dropdown_menu.css
-    ./src/css/jquery.ui.radio-checkbox.css
-    ./src/css/jquery.ui.switcher.css
+    ./src/css/jquery.ui.checkboxes.css
+    ./src/css/jquery.ui.tooltip2.css
     ./src/css/jquery.ui.removable.css
     ./src/css/jquery.ui.disabable.css
-    ./src/css/jquery.ui.delayable.css
     ./src/css/jquery.ui.scrollable.css
-    ./src/css/jquery.ui.panel.css
+    #./src/css/jquery.ui.panel.css
     ./src/css/animations.css
     
 @ # end block

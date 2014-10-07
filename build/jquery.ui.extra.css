@@ -90,8 +90,14 @@
     margin: 2px 4px;
     background-color: #efefef;
 }
+.ui-dropdown:after,
 .ui-dropdown:before {
-    content: ' ';
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    content: " ";
     position: absolute;
     padding: 0;
     margin: 0;
@@ -101,58 +107,38 @@
     user-select: none;
     pointer-events: none;
     cursor: inherit;
-    z-index: 4;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 40px;
-    border: inherit;
-    border-left: none;
+    z-index: 5;
     -webkit-border-radius: inherit;
     -moz-border-radius: inherit;
     -ms-border-radius: inherit;
     -o-border-radius: inherit;
     border-radius: inherit;
-    /*background: inherit;*/
     background-image: inherit;
+    background-repeat: inherit;
     background-color: inherit;
+    border: inherit;
+    color: inherit;
+    text-shadow: none;
+    top: 0; 
+    vertical-align: middle;
+    text-align: center;
 }
-.ui-dropdown:after {
-    position: absolute;
-    padding: 0;
-    margin: 0;
-    display: block;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-    pointer-events: none;
-    cursor: inherit;
-    z-index: 3;
-    bottom: 0;
+.ui-dropdown:before {
     left: 5px;
+    background: none;
+    border: none;
     height: 100%;
     width: 40px;
-    line-height: 100%;
-    text-align: center;
-    word-break: keep-all;
+    line-height: 200%;
     font-family: sans-serif;
-    font-size: 8px;
-    content: "\25C4\25BA";
-    /*background: none;*/
-    /*background: inherit;*/
-    background-image: inherit;
-    background-color: inherit;
-    color: inherit;
-    -webkit-transform-origin: center center;
-    -webkit-transform: rotate(-90deg);
-    -moz-transform-origin: center center;
-    -moz-transform: rotate(-90deg);
-    -ms-transform-origin: center center;
-    -ms-transform: rotate(-90deg);
-    -o-transform-origin: center center;
-    -o-transform: rotate(-90deg);
-    transform-origin: center center;
-    transform: rotate(-90deg);
+    font-size: 20px;
+    font-weight: normal;
+    content: "\21c5";
+}
+.ui-dropdown:after {
+    bottom: 0; right: 0;
+    width: 40px;
+    border-left: none;
 }
 .ui-dropdown > select {
     -webkit-appearance: none;
@@ -164,16 +150,15 @@
     position: relative;
     display: inline-block;
     margin: 0;
+    cursor: inherit;
     padding: 10px 40px;
     min-width: 120px;
-    /*padding: .5em 1em;*/
     line-height:normal;
     height: 100%;
     font-size: inherit;
     border: 0;
     border-radius: inherit;
     color: inherit;
-    /*background: rgba(0, 0, 0, 0);*/
     background-color: inherit;
     text-shadow: inherit;
     cursor: inherit;
@@ -279,7 +264,7 @@
     /*.ui-dropdown > select {
         padding: .5em 2em;
     }*/
-    .ui-dropdown:before {
+    .ui-dropdown:after {
         display: none !important;
     }
 }/*
@@ -1010,10 +995,9 @@ input.ui-radio.ui-led-button:checked + label:before
     box-sizing:border-box;
     position: relative;  display: block;
     padding: 0;  margin: 0;
-    width: 20%; /*height: 50%;*/
-    height: 1px; padding-bottom: 20%; /* 1:1 */
+    width: 10%; height: 1px; padding-bottom: 10%; /* 1:1 */
     top: 50%; left: 50%;
-    z-index: 1;
+    z-index: 1; overflow: visible;
     font-size: 1em;
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
@@ -1022,28 +1006,38 @@ input.ui-radio.ui-led-button:checked + label:before
     transform: translate(-50%, -50%);
 }
 /* http://frayd.us/blog/pure-css-loading-animation/ */
-.ui-spinner:before, 
-.ui-spinner:after 
+.ui-spinner:before
 {
     -webkit-box-sizing:border-box;
     -moz-box-sizing:border-box;
     -ms-box-sizing:border-box;
     -o-box-sizing:border-box;
     box-sizing:border-box;
-    position: absolute;
-    display: block;
-    z-index:1;
+    position: absolute; display: block;
+    z-index:1; overflow: visible;
     padding: 0; margin: 0;
     content: " ";
     visibility: hidden;
     background:none;
     -webkit-animation-name: none;
+    -moz-animation-name: none;
+    -ms-animation-name: none;
+    -o-animation-name: none;
     animation-name: none;
     -webkit-animation-duration: 1.4s;
+    -moz-animation-duration: 1.4s;
+    -ms-animation-duration: 1.4s;
+    -o-animation-duration: 1.4s;
     animation-duration: 1.4s;
     -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
     -webkit-animation-timing-function: linear;
+    -moz-animation-timing-function: linear;
+    -ms-animation-timing-function: linear;
+    -o-animation-timing-function: linear;
     animation-timing-function: linear;
     border-style: solid; border-color: transparent; border-radius: 50%;
     text-align: center;
@@ -1057,29 +1051,7 @@ input.ui-radio.ui-led-button:checked + label:before
     border-top-color: rgba(200, 0, 0, .8);
     border-bottom-color: rgba(0, 200, 200, .8);
     box-shadow: 0 0 0 3px rgba(200, 0, 0, .3), 0 0 0 6px rgba(0, 200, 200, .3);
-    border-top-width: 3px;
-    border-left-width: 2px;
-    border-bottom-width: 1px;
-    border-right-width: 1px;
-    /*border-top-color: rgba(0,0,0,.9);
-    border-left-color: rgba(0,0,0,.7);
-    box-shadow: 0px 0px 5px 2px rgba(255, 255, 255, .3);
-    border-style: solid; 
-    border-width: 3px;
-    border-right-width: 2px;
-    border-bottom-width: 1px;
-    border-left-width: 0px;*/
-}
-.ui-spinner:after 
-{
-    z-index:2;
-    -webkit-animation-duration: 1s;
-    animation-duration: 1s;
-    -webkit-animation-direction: reverse;
-    animation-direction: reverse;
-    content: "\231B";
-    font-size: 1.8em;
-    color: rgba(200, 0, 0, .5);
+    border-width: 2px;
 }
 
 .ui-delayable,
@@ -1150,13 +1122,10 @@ input.ui-radio.ui-led-button:checked + label:before
 {
     visibility: visible;
     -webkit-animation-name: ui-spin;
+    -moz-animation-name: ui-spin;
+    -ms-animation-name: ui-spin;
+    -o-animation-name: ui-spin;
     animation-name: ui-spin;
-}
-.ui-delayed  > .ui-delayable > .ui-spinner:after
-{
-    visibility: visible;
-    /*-webkit-animation-name: ui-delayable-spin;
-    animation-name: ui-delayable-spin;*/
 }
 .ui-undelayed  > .ui-delayable
 {
@@ -1165,6 +1134,18 @@ input.ui-radio.ui-led-button:checked + label:before
 @-webkit-keyframes ui-spin {
     from { -webkit-transform: rotate(0deg); }
     to { -webkit-transform: rotate(360deg); }
+}
+@-moz-keyframes ui-spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-ms-keyframes ui-spin {
+    from { -ms-transform: rotate(0deg); }
+    to { -ms-transform: rotate(360deg); }
+}
+@-o-keyframes ui-spin {
+    from { -o-transform: rotate(0deg); }
+    to { -o-transform: rotate(360deg); }
 }
 @keyframes ui-spin {
     from { transform: rotate(0deg); }

@@ -489,7 +489,7 @@ var jQueryUIExtra = function() {
         },
         
         _destroy: function() {
-            var self = this.
+            var self = this;
             self._off(self._handle, 'click');
             self._handle.remove();
             if ( self.options.wrap )

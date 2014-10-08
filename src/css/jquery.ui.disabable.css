@@ -7,11 +7,20 @@
     box-sizing:border-box;
     position: relative;  display: block;
     padding: 0;  margin: 0;
-    width: 20%; height: 1px; padding-bottom: 20%; /* 1:1 */
-    top: 50%; left: 50%;
     z-index: 1; overflow: visible;
     font-size: 1em;
     visibility: hidden;
+}
+.ui-spinner.ui-spinner-inline
+{
+    display: inline-block;
+    width: 24px; height: 24px;
+    vertical-align: middle;
+}
+.ui-spinner:not(.ui-spinner-inline)
+{
+    width: 20%; height: 1px; padding-bottom: 20%; /* 1:1 */
+    top: 50%; left: 50%;
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);

@@ -7,10 +7,11 @@
     box-sizing:border-box;
     position: relative;  display: block;
     padding: 0;  margin: 0;
-    width: 10%; height: 1px; padding-bottom: 10%; /* 1:1 */
+    width: 20%; height: 1px; padding-bottom: 20%; /* 1:1 */
     top: 50%; left: 50%;
     z-index: 1; overflow: visible;
     font-size: 1em;
+    visibility: hidden;
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
@@ -25,12 +26,12 @@
     -ms-box-sizing:border-box;
     -o-box-sizing:border-box;
     box-sizing:border-box;
-    position: absolute; display: block;
+    position: absolute;
     z-index:1; overflow: visible;
     padding: 0; margin: 0;
     content: " ";
-    visibility: hidden;
-    background:none;
+    background: none;
+    display: block; visibility: hidden;
     -webkit-animation-name: none;
     -moz-animation-name: none;
     -ms-animation-name: none;
@@ -60,10 +61,27 @@
 }
 .ui-spinner:before
 {
-    border-top-color: rgba(200, 0, 0, .8);
-    border-bottom-color: rgba(0, 200, 200, .8);
-    box-shadow: 0 0 0 3px rgba(200, 0, 0, .3), 0 0 0 6px rgba(0, 200, 200, .3);
+    border-top-color: rgba(200, 0, 0, .7);
+    border-bottom-color: rgba(0, 200, 200, .7);
+    -webkit-box-shadow: 0 0 0 3px rgba(128, 128, 128, .3), 0 0 0 6px rgba(200, 200, 200, .2);
+    -moz-box-shadow: 0 0 0 3px rgba(128, 128, 128, .3), 0 0 0 6px rgba(200, 200, 200, .2);
+    -ms-box-shadow: 0 0 0 3px rgba(128, 128, 128, .3), 0 0 0 6px rgba(200, 200, 200, .2);
+    -o-box-shadow: 0 0 0 3px rgba(128, 128, 128, .3), 0 0 0 6px rgba(200, 200, 200, .2);
+    box-shadow: 0 0 0 3px rgba(128, 128, 128, .3), 0 0 0 6px rgba(200, 200, 200, .2);
     border-width: 2px;
+}
+.active.ui-spinner
+{
+    visibility: visible;
+}
+.active.ui-spinner:before
+{
+    display: block; visibility: visible;
+    -webkit-animation-name: ui-spin;
+    -moz-animation-name: ui-spin;
+    -ms-animation-name: ui-spin;
+    -o-animation-name: ui-spin;
+    animation-name: ui-spin;
 }
 
 .ui-delayable,
@@ -129,15 +147,6 @@
     z-index: 500;
     opacity: 1;
     cursor: progress;
-}
-.ui-delayed  > .ui-delayable > .ui-spinner:before
-{
-    visibility: visible;
-    -webkit-animation-name: ui-spin;
-    -moz-animation-name: ui-spin;
-    -ms-animation-name: ui-spin;
-    -o-animation-name: ui-spin;
-    animation-name: ui-spin;
 }
 .ui-undelayed  > .ui-delayable
 {

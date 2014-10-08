@@ -402,6 +402,7 @@ var jQueryUIExtra = function() {
             if ( !self._isVisible )
             {
                 self.element.removeClass('ui-undelayed').addClass('ui-delayed');
+                self._overlay.children('.ui-spinner').addClass('active');
                 self._isVisible = true;
             }
         },
@@ -411,6 +412,7 @@ var jQueryUIExtra = function() {
             if ( self._isVisible )
             {
                 self.element.removeClass('ui-delayed').addClass('ui-undelayed');
+                self._overlay.children('.ui-spinner').removeClass('active');
                 self._isVisible = false;
             }
         },

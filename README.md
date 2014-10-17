@@ -3,6 +3,10 @@ jQueryUI Extra Widgets
 
 A collection of simple, custom, useful widgets (in jQueryUI format) not included in jQueryUI package.
 
+**see also** 
+* [ModelView UI Widgets](https://github.com/foo123/modelview-widgets)
+
+
 Most widgets are generic and themable by default (by including the relevant jquery-ui theme)
 others might need a little tweeking in the respective css.
 

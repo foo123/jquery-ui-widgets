@@ -20,12 +20,12 @@ SRC =[]
     ./src/js/header.js
     #./src/js/jquery.easing.js
     #./src/js/jquery.ui.effects.js
-    ./src/js/jquery.ui.dropdown.js
-    ./src/js/jquery.ui.dropdown_menu.js
     ./src/js/jquery.ui.checkboxes.js
-    ./src/js/jquery.ui.tooltip2.js
     ./src/js/jquery.ui.disabable.js
     ./src/js/jquery.ui.removable.js
+    ./src/js/jquery.ui.dropdown.js
+    ./src/js/jquery.ui.dropdown_menu.js
+    ./src/js/jquery.ui.tooltip2.js
     ./src/js/jquery.ui.uploadable.js
     ./src/js/jquery.ui.scrollable.js
     #./src/js/jquery.ui.panel.js

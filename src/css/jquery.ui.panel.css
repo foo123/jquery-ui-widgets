@@ -53,3 +53,30 @@
 .ui-panel-header  > .toggle:focus {
     outline: none;
 }
+
+/* animation events */
+.ui-panel-open  > .animated {
+    -webkit-animation-name: slideFadeDown;
+    -webkit-animation-timing-function: ease-in;
+    -moz-animation-name: slideFadeDown;
+    -moz-animation-timing-function: ease-in;
+    -ms-animation-name: slideFadeDown;
+    -ms-animation-timing-function: ease-in;
+    -o-animation-name: slideFadeDown;
+    -o-animation-timing-function: ease-in;
+    animation-name: slideFadeDown;
+    animation-timing-function: ease-in;
+}
+
+.ui-panel-closed  > .animated {
+    -webkit-animation-name: slideFadeUp;
+    -webkit-animation-timing-function: ease-out;
+    -moz-animation-name: slideFadeUp;
+    -moz-animation-timing-function: ease-out;
+    -ms-animation-name: slideFadeUp;
+    -ms-animation-timing-function: ease-out;
+    -o-animation-name: slideFadeUp;
+    -o-animation-timing-function: ease-out;
+    animation-name: slideFadeUp;
+    animation-timing-function: ease-out;
+}

@@ -17,16 +17,17 @@
 
 SRC =[]
     
-    ./src/css/common.css
+    ./src/css/header.css
+    ./src/css/animations.css
+    ./src/css/spinners.css
+    ./src/css/jquery.ui.checkboxes.css
+    ./src/css/jquery.ui.disabable.css
+    ./src/css/jquery.ui.removable.css
     ./src/css/jquery.ui.dropdown.css
     ./src/css/jquery.ui.dropdown_menu.css
-    ./src/css/jquery.ui.checkboxes.css
     ./src/css/jquery.ui.tooltip2.css
-    ./src/css/jquery.ui.removable.css
-    ./src/css/jquery.ui.disabable.css
     ./src/css/jquery.ui.scrollable.css
     #./src/css/jquery.ui.panel.css
-    ./src/css/animations.css
     
 @ # end block
 

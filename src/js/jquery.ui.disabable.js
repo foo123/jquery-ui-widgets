@@ -57,9 +57,13 @@
         _isVisible: false,
         
         _create: function() {
-            var self = this;
-            self._overlay = $('<div />').addClass("ui-delayable").append($('<div />').addClass("ui-spinner"));
-            self.element.append( self._overlay );
+            var self = this, el = self.element;
+            el.append( 
+                self._overlay=$('<div />').addClass("ui-delayable")
+                .append(
+                    $('<div />').addClass("ui-spinner").transferClasses( 'ui-spinner-', el)
+                ) 
+            );
         },
 
         enableIt: function() {

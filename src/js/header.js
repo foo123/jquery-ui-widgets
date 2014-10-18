@@ -4,9 +4,41 @@
 *   https://github.com/foo123/jquery-ui-widgets
 *
 **/
-!function( jQuery ) {
+!function( $ ) {
 
 "use strict";
+
+function esc_re( s ) { return s.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"); }
+
+$.fn.transferClasses = function( prefix, el ) {
+    if ( 2 <= arguments.length )
+    {
+        
+        var $el = $(el), classes1 = $el[0].className.split(/\s+/g), 
+            classes2, re_prefix, i;
+            
+        if ( classes1.length )
+        {
+            re_prefix = new RegExp('^' + esc_re( prefix ), '');
+            classes2 = [];
+            for (i=classes1.length-1; i>=0; i--)
+            {
+                if ( classes1[i].match( re_prefix ) )
+                {
+                    classes2.push( classes1[i] );
+                    classes1.splice( i, 1 );
+                }
+            }
+            if ( classes2.length )
+            {
+                $el.attr( 'class', classes1.join(' ') );
+                classes2 = classes2.join(' ');
+                this.addClass( classes2 );
+            }
+        }
+    }
+    return this;
+};
 
 var jQueryUIExtra = function() {
     var NAMESPACE = "uiExtra", 

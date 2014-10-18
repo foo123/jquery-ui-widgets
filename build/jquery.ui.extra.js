@@ -9,9 +9,41 @@
 *   https://github.com/foo123/jquery-ui-widgets
 *
 **/
-!function( jQuery ) {
+!function( $ ) {
 
 "use strict";
+
+function esc_re( s ) { return s.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"); }
+
+$.fn.transferClasses = function( prefix, el ) {
+    if ( 2 <= arguments.length )
+    {
+        
+        var $el = $(el), classes1 = $el[0].className.split(/\s+/g), 
+            classes2, re_prefix, i;
+            
+        if ( classes1.length )
+        {
+            re_prefix = new RegExp('^' + esc_re( prefix ), '');
+            classes2 = [];
+            for (i=classes1.length-1; i>=0; i--)
+            {
+                if ( classes1[i].match( re_prefix ) )
+                {
+                    classes2.push( classes1[i] );
+                    classes1.splice( i, 1 );
+                }
+            }
+            if ( classes2.length )
+            {
+                $el.attr( 'class', classes1.join(' ') );
+                classes2 = classes2.join(' ');
+                this.addClass( classes2 );
+            }
+        }
+    }
+    return this;
+};
 
 var jQueryUIExtra = function() {
     var NAMESPACE = "uiExtra", 
@@ -56,6 +88,230 @@ var jQueryUIExtra = function() {
 }();
 
 !function($, $UI, undef) {
+
+    var CHECKBOX = 1, RADIO = 2, SWITCH = 4, PUSH = 8;
+    
+    $.widget( $UI.NS("checkbox"), {
+        
+        _cbtype: null,
+        _classes: null,
+        _wrapper: null,
+        
+        _create: function( ) {
+            var self=  this, el = self.element, name, type;
+            
+            type = 'radio' === el.attr('type') ? RADIO : CHECKBOX;
+            if ( el.hasClass('ui-switch-button') ) type |= SWITCH;
+            if ( el.hasClass('ui-push-button') ) type |= PUSH;
+            self._cbtype = type;
+            
+            if ( !el.attr("id") ) el.attr( "id", $UI.UUID() );
+            name = self._wID = el.attr( "id" );
+                
+            if ( SWITCH & type )
+            {
+                self._wrapper = el
+                    .wrap('<span />').parent( )
+                    .addClass("ui-switch")
+                    .append($('<label for="'+name+'" class="'+"ui-switch-off"+'">'+"OFF"+'</label><label for="'+name+'" class="'+"ui-switch-on"+'">'+"ON"+'</label><span class="'+"ui-switch-handle ui-state-default"+'"></span>'))
+                ;
+            }
+            else
+            {
+                if ( RADIO & type ) self._classes = 'ui-radio';
+                else self._classes = 'ui-checkbox';
+                el.addClass( self._classes ).after($('<label for="'+name+'">&nbsp;</label>'));
+            }
+        },
+
+        _destroy: function( ) {
+            var self = this;
+            if ( SWITCH & self._cbtype )
+            {
+                self.element.unwrap( );
+                self._wrapper.remove( );
+            }
+            else
+            {
+                self.element.removeClass( self._classes ).next( ).remove( );
+            }
+            self._classes = null;
+            self._wrapper = null;
+        }
+    });
+
+}(jQuery, jQueryUIExtra);!function($, $UI, undef) {
+
+    $.widget( $UI.NS("disabable"), {
+        
+        options: { },
+        
+        _overlay: null,
+        _isDisabled: false,
+        
+        _create: function() {
+            var self = this;
+            self.element.append(self._overlay = $('<div />').addClass('ui-disabable'));
+        },
+
+        enableIt: function() {
+            var self = this;
+            if ( self._isDisabled )
+            {
+                self.element.removeClass('ui-disabled').addClass('ui-enabled');
+                self._isDisabled = false;
+                /*self._overlay.animate(self._getEnabledStyles(), o.duration, o.easing, function(e){
+                    self._overlay.css({display: 'none'});
+                    self._trigger('oncomplete', e, { state: self._isDisabled=false});
+                });*/
+            }
+        },
+        
+        disableIt: function( ) {
+            var self = this;
+            if ( !self._isDisabled )
+            {
+                self.element.removeClass('ui-enabled').addClass('ui-disabled');
+                self._isDisabled = true;
+                /*self._overlay.animate(self._getDisabledStyles(), o.duration, o.easing, function(e){
+                    self._trigger('oncomplete', e, { state: self._isDisabled=true});
+                });*/
+            }
+        },
+        
+        toggle: function( ) {
+            var self = this;
+            if ( self._isDisabled ) self.enableIt( );
+            else self.disableIt( );
+        },
+        
+        _destroy: function() {
+            this._overlay.remove( );
+            this._overlay = null;
+        }
+    });
+
+    $.widget( $UI.NS("delayable"), {
+        
+        options: {},
+        
+        _overlay: null,
+        _isVisible: false,
+        
+        _create: function() {
+            var self = this, el = self.element;
+            el.append( 
+                self._overlay=$('<div />').addClass("ui-delayable")
+                .append(
+                    $('<div />').addClass("ui-spinner").transferClasses( 'ui-spinner-', el)
+                ) 
+            );
+        },
+
+        enableIt: function() {
+            var self = this;
+            if ( !self._isVisible )
+            {
+                self.element.removeClass('ui-undelayed').addClass('ui-delayed');
+                self._overlay.children('.ui-spinner').addClass('active');
+                self._isVisible = true;
+            }
+        },
+        
+        disableIt: function() {
+            var self = this;
+            if ( self._isVisible )
+            {
+                self.element.removeClass('ui-delayed').addClass('ui-undelayed');
+                self._overlay.children('.ui-spinner').removeClass('active');
+                self._isVisible = false;
+            }
+        },
+        
+        toggle: function( ) {
+            var self = this;
+            if ( self._isVisible ) self.disableIt( );
+            else self.enableIt( );
+        },
+        
+        _destroy: function() {
+            this._overlay.remove( );
+            this._overlay = null;
+        }
+    });
+    
+}(jQuery, jQueryUIExtra);!function($, $UI, undef) {
+
+    $.widget( $UI.NS("removable"), {
+        
+        options: {
+            classes: {
+                wrapper: "ui-removable",
+                handle: "ui-removable-remove"
+            },
+            icon: null,
+            effect: "fadeOut",
+            duration: 400,
+            easing: 'linear',
+            wrap: false,
+            autoremove: true,
+            onremove: null
+        },
+        
+        _wrapper: null,
+        _handle: null,
+        
+        _create: function() {
+            var self = this, o = self.options;
+            
+            if ( o.wrap )
+                self._wrapper = self.element.wrap('<div />').parent().addClass( o.classes.wrapper );
+            else
+                self._wrapper = self.element.addClass( o.classes.wrapper );
+            
+            self._handle = $('<button />').addClass( o.classes.handle );
+            
+            if ( o.icon )
+                self._handle.addClass(['ui-icon', o.icon].join(' '));
+            
+            self._wrapper.append( self._handle );
+            
+            self._on(self._handle, {
+                'click' : '_removeItHandler'
+            });
+        },
+
+        _removeItHandler: function(event) {
+            event.preventDefault();
+            this._removeIt( event );
+        },
+        
+        _removeIt: function( event ) {
+            var self = this, o = self.options;
+            self._wrapper.fadeOut(o.duration, o.easing, function(){
+                if ( o.autoremove )
+                    self._wrapper.remove();
+                self._trigger('onremove', event||null, { target: self.element } );
+            });
+        },
+        
+        remove: function() {
+            this._removeIt();
+        },
+        
+        _destroy: function() {
+            var self = this;
+            self._off(self._handle, 'click');
+            self._handle.remove();
+            if ( self.options.wrap )
+            {
+                self.element.unwrap();
+                self._wrapper.remove();
+            }
+        }
+    });
+
+}(jQuery, jQueryUIExtra);!function($, $UI, undef) {
 
     $.widget( $UI.NS("dropdown"), {
         
@@ -184,59 +440,6 @@ var jQueryUIExtra = function() {
 
 }(jQuery, jQueryUIExtra);!function($, $UI, undef) {
 
-    var CHECKBOX = 1, RADIO = 2, SWITCH = 4, PUSH = 8;
-    
-    $.widget( $UI.NS("checkbox"), {
-        
-        _cbtype: null,
-        _classes: null,
-        _wrapper: null,
-        
-        _create: function( ) {
-            var self=  this, el = self.element, name, type;
-            
-            type = 'radio' === el.attr('type') ? RADIO : CHECKBOX;
-            if ( el.hasClass('ui-switch-button') ) type |= SWITCH;
-            if ( el.hasClass('ui-push-button') ) type |= PUSH;
-            self._cbtype = type;
-            
-            if ( !el.attr("id") ) el.attr( "id", $UI.UUID() );
-            name = self._wID = el.attr( "id" );
-                
-            if ( SWITCH & type )
-            {
-                self._wrapper = el
-                    .wrap('<span />').parent( )
-                    .addClass("ui-switch")
-                    .append($('<label for="'+name+'" class="'+"ui-switch-off"+'">'+"OFF"+'</label><label for="'+name+'" class="'+"ui-switch-on"+'">'+"ON"+'</label><span class="'+"ui-switch-handle ui-state-default"+'"></span>'))
-                ;
-            }
-            else
-            {
-                if ( RADIO & type ) self._classes = 'ui-radio';
-                else self._classes = 'ui-checkbox';
-                el.addClass( self._classes ).after($('<label for="'+name+'">&nbsp;</label>'));
-            }
-        },
-
-        _destroy: function( ) {
-            var self = this;
-            if ( SWITCH & self._cbtype )
-            {
-                self.element.unwrap( );
-                self._wrapper.remove( );
-            }
-            else
-            {
-                self.element.removeClass( self._classes ).next( ).remove( );
-            }
-            self._classes = null;
-            self._wrapper = null;
-        }
-    });
-
-}(jQuery, jQueryUIExtra);!function($, $UI, undef) {
-
     function tooltipContent( ) 
     {
         var el = $( this );
@@ -330,173 +533,6 @@ var jQueryUIExtra = function() {
             else /*if ( el.hasClass('has-tooltip-right') )*/
                 o.position = tooltipPosition('right');
             this._super( );
-        }
-    });
-
-}(jQuery, jQueryUIExtra);!function($, $UI, undef) {
-
-    $.widget( $UI.NS("disabable"), {
-        
-        options: { },
-        
-        _overlay: null,
-        _isDisabled: false,
-        
-        _create: function() {
-            var self = this;
-            self.element.append(self._overlay = $('<div />').addClass('ui-disabable'));
-        },
-
-        enableIt: function() {
-            var self = this;
-            if ( self._isDisabled )
-            {
-                self.element.removeClass('ui-disabled').addClass('ui-enabled');
-                self._isDisabled = false;
-                /*self._overlay.animate(self._getEnabledStyles(), o.duration, o.easing, function(e){
-                    self._overlay.css({display: 'none'});
-                    self._trigger('oncomplete', e, { state: self._isDisabled=false});
-                });*/
-            }
-        },
-        
-        disableIt: function( ) {
-            var self = this;
-            if ( !self._isDisabled )
-            {
-                self.element.removeClass('ui-enabled').addClass('ui-disabled');
-                self._isDisabled = true;
-                /*self._overlay.animate(self._getDisabledStyles(), o.duration, o.easing, function(e){
-                    self._trigger('oncomplete', e, { state: self._isDisabled=true});
-                });*/
-            }
-        },
-        
-        toggle: function( ) {
-            var self = this;
-            if ( self._isDisabled ) self.enableIt( );
-            else self.disableIt( );
-        },
-        
-        _destroy: function() {
-            this._overlay.remove( );
-            this._overlay = null;
-        }
-    });
-
-    $.widget( $UI.NS("delayable"), {
-        
-        options: {},
-        
-        _overlay: null,
-        _isVisible: false,
-        
-        _create: function() {
-            var self = this;
-            self._overlay = $('<div />').addClass("ui-delayable").append($('<div />').addClass("ui-spinner"));
-            self.element.append( self._overlay );
-        },
-
-        enableIt: function() {
-            var self = this;
-            if ( !self._isVisible )
-            {
-                self.element.removeClass('ui-undelayed').addClass('ui-delayed');
-                self._overlay.children('.ui-spinner').addClass('active');
-                self._isVisible = true;
-            }
-        },
-        
-        disableIt: function() {
-            var self = this;
-            if ( self._isVisible )
-            {
-                self.element.removeClass('ui-delayed').addClass('ui-undelayed');
-                self._overlay.children('.ui-spinner').removeClass('active');
-                self._isVisible = false;
-            }
-        },
-        
-        toggle: function( ) {
-            var self = this;
-            if ( self._isVisible ) self.disableIt( );
-            else self.enableIt( );
-        },
-        
-        _destroy: function() {
-            this._overlay.remove( );
-            this._overlay = null;
-        }
-    });
-    
-}(jQuery, jQueryUIExtra);!function($, $UI, undef) {
-
-    $.widget( $UI.NS("removable"), {
-        
-        options: {
-            classes: {
-                wrapper: "ui-removable",
-                handle: "ui-removable-remove"
-            },
-            icon: null,
-            effect: "fadeOut",
-            duration: 400,
-            easing: 'linear',
-            wrap: false,
-            autoremove: true,
-            onremove: null
-        },
-        
-        _wrapper: null,
-        _handle: null,
-        
-        _create: function() {
-            var self = this, o = self.options;
-            
-            if ( o.wrap )
-                self._wrapper = self.element.wrap('<div />').parent().addClass( o.classes.wrapper );
-            else
-                self._wrapper = self.element.addClass( o.classes.wrapper );
-            
-            self._handle = $('<button />').addClass( o.classes.handle );
-            
-            if ( o.icon )
-                self._handle.addClass(['ui-icon', o.icon].join(' '));
-            
-            self._wrapper.append( self._handle );
-            
-            self._on(self._handle, {
-                'click' : '_removeItHandler'
-            });
-        },
-
-        _removeItHandler: function(event) {
-            event.preventDefault();
-            this._removeIt( event );
-        },
-        
-        _removeIt: function( event ) {
-            var self = this, o = self.options;
-            self._wrapper.fadeOut(o.duration, o.easing, function(){
-                if ( o.autoremove )
-                    self._wrapper.remove();
-                self._trigger('onremove', event||null, { target: self.element } );
-            });
-        },
-        
-        remove: function() {
-            this._removeIt();
-        },
-        
-        _destroy: function() {
-            var self = this;
-            self._off(self._handle, 'click');
-            self._handle.remove();
-            if ( self.options.wrap )
-            {
-                self.element.unwrap();
-                self._wrapper.remove();
-            }
         }
     });
 

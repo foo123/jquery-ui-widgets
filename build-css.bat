@@ -3,15 +3,15 @@
 REM ###################################################
 REM #
 REM #   The buildtools repository is at:
-REM #   https://github.com/foo123/scripts/buildtools
+REM #   https://github.com/foo123/Beeld
 REM #
 REM ###################################################
 
 REM to use the python build tool do:
-REM python %BUILDTOOLS%\build.py --deps ".\dependencies-css" --compiler cssmin
+REM python %BUILDTOOLS%\Beeld.py --config ".\config.custom" --tasks build_css --compiler cssmin
 
 REM to use the php build tool do:
-REM php -f %BUILDTOOLS%\build.php -- --deps=".\dependencies-css" --compiler cssmin
+REM php -f %BUILDTOOLS%\Beeld.php --  --config=".\config.custom" --tasks=build_css --compiler=cssmin
 
 REM to use the node build tool do:
-node %BUILDTOOLS%\build.js --deps ".\dependencies-css" --compiler cssmin
+node %BUILDTOOLS%\Beeld.js  --config ".\config.custom" --tasks build_css --compiler cssmin

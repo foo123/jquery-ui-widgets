@@ -1,0 +1,119 @@
+###################################################
+#
+#   The buildtools repository is at:
+#   https://github.com/foo123/Beeld
+#
+###################################################
+
+tasks =[{}]
+    
+    build ={}
+        src =[]
+            
+            ./src/js/header.js
+            #./src/js/jquery.easing.js
+            #./src/js/jquery.ui.effects.js
+            ./src/js/jquery.ui.checkboxes.js
+            ./src/js/jquery.ui.disabable.js
+            ./src/js/jquery.ui.removable.js
+            ./src/js/jquery.ui.dropdown.js
+            ./src/js/jquery.ui.dropdown_menu.js
+            ./src/js/jquery.ui.tooltip2.js
+            ./src/js/jquery.ui.uploadable.js
+            ./src/js/jquery.ui.scrollable.js
+            #./src/js/jquery.ui.panel.js
+            ./src/js/footer.js
+            
+        @ # end block
+
+        # extract header from this file
+        header = ./src/js/header.js
+
+
+        out = ./build/jquery.ui.extra.js
+        
+    @ # end block
+
+    build_css ={}
+        
+        src =[]
+            
+            ./src/css/header.css
+            ./src/css/animations.css
+            ./src/css/spinners.css
+            ./src/css/jquery.ui.checkboxes.css
+            ./src/css/jquery.ui.disabable.css
+            ./src/css/jquery.ui.removable.css
+            ./src/css/jquery.ui.dropdown.css
+            ./src/css/jquery.ui.dropdown_menu.css
+            ./src/css/jquery.ui.tooltip2.css
+            ./src/css/jquery.ui.scrollable.css
+            #./src/css/jquery.ui.panel.css
+            
+        @ # end block
+
+        # extract header from this file
+        header = ./src/css/common.css
+
+
+        out = ./build/jquery.ui.extra.css
+    @ # end block
+
+    minify ={}
+        
+        src =[]
+            ./build/jquery.ui.extra.js
+        @ # end block
+
+
+        # Minify the Package (map of lists)
+        minify ={}
+
+            # Options for Node UglifyJS Compiler (if used, default), (mangle and compress)
+            uglifyjs =[]
+                -m -c
+            @ # end block
+
+            # Options for Java Closure Compiler (if used)
+            closure =[]
+                "--language_in=ECMASCRIPT5_STRICT"
+            @ # end block
+
+            # Options for Java YUI Compressor Compiler (if used)
+            yui =[]
+                --preserve-semi
+            @ # end block
+
+        @ # end block
+
+        out = ./build/jquery.ui.extra.min.js
+    @ # end block
+
+    minify_css ={}
+        
+        src =[]
+            ./build/jquery.ui.extra.css
+        @ # end block
+
+
+        # Minify the Package (map of lists)
+        minify ={}
+
+            # Options for CSSMin
+            cssmin =[]
+                #--vendor-prefixes
+                --hsla2rgba
+                --rgb2hex
+                #--embed-images
+                #--embed-fonts
+                #--embed-imports
+            @ # end block
+
+
+        @ # end block
+
+        out = ./build/jquery.ui.extra.min.css
+    @ # end block
+
+@ # end block
+

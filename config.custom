@@ -7,7 +7,8 @@
 
 tasks =[{}]
     
-    build ={}
+    build =[{}]
+        
         src =[]
             
             ./src/js/header.js
@@ -24,7 +25,7 @@ tasks =[{}]
             #./src/js/jquery.ui.panel.js
             ./src/js/footer.js
             
-        @ # end block
+        @
 
         # extract header from this file
         header = ./src/js/header.js
@@ -32,9 +33,9 @@ tasks =[{}]
 
         out = ./build/jquery.ui.extra.js
         
-    @ # end block
+    @
 
-    build_css ={}
+    build_css =[{}]
         
         src =[]
             
@@ -50,20 +51,20 @@ tasks =[{}]
             ./src/css/jquery.ui.scrollable.css
             #./src/css/jquery.ui.panel.css
             
-        @ # end block
+        @
 
         # extract header from this file
         header = ./src/css/common.css
 
 
         out = ./build/jquery.ui.extra.css
-    @ # end block
+    @
 
-    minify ={}
+    minify =[{}]
         
         src =[]
             ./build/jquery.ui.extra.js
-        @ # end block
+        @
 
 
         # Minify the Package (map of lists)
@@ -72,28 +73,28 @@ tasks =[{}]
             # Options for Node UglifyJS Compiler (if used, default), (mangle and compress)
             uglifyjs =[]
                 -m -c
-            @ # end block
+            @
 
             # Options for Java Closure Compiler (if used)
             closure =[]
                 "--language_in=ECMASCRIPT5_STRICT"
-            @ # end block
+            @
 
             # Options for Java YUI Compressor Compiler (if used)
             yui =[]
                 --preserve-semi
-            @ # end block
+            @
 
-        @ # end block
+        @
 
         out = ./build/jquery.ui.extra.min.js
-    @ # end block
+    @
 
-    minify_css ={}
+    minify_css =[{}]
         
         src =[]
             ./build/jquery.ui.extra.css
-        @ # end block
+        @
 
 
         # Minify the Package (map of lists)
@@ -107,13 +108,13 @@ tasks =[{}]
                 #--embed-images
                 #--embed-fonts
                 #--embed-imports
-            @ # end block
+            @
 
 
-        @ # end block
+        @
 
         out = ./build/jquery.ui.extra.min.css
-    @ # end block
+    @
 
-@ # end block
+@
 

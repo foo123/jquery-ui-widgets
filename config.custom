@@ -10,13 +10,13 @@ tasks =[{}]
     build =[{}]
         
         src =[]
-            
             ./src/js/header.js
             #./src/js/jquery.easing.js
             #./src/js/jquery.ui.effects.js
             ./src/js/jquery.ui.checkboxes.js
             ./src/js/jquery.ui.disabable.js
             ./src/js/jquery.ui.removable.js
+            ./src/js/jquery.ui.polymorphic.js
             ./src/js/jquery.ui.dropdown.js
             ./src/js/jquery.ui.dropdown_menu.js
             ./src/js/jquery.ui.tooltip2.js
@@ -24,12 +24,10 @@ tasks =[{}]
             ./src/js/jquery.ui.scrollable.js
             #./src/js/jquery.ui.panel.js
             ./src/js/footer.js
-            
         @
 
         # extract header from this file
         header = ./src/js/header.js
-
 
         out = ./build/jquery.ui.extra.js
         
@@ -38,7 +36,6 @@ tasks =[{}]
     build_css =[{}]
         
         src =[]
-            
             ./src/css/header.css
             ./src/css/animations.css
             ./src/css/spinners.css
@@ -50,12 +47,10 @@ tasks =[{}]
             ./src/css/jquery.ui.tooltip2.css
             ./src/css/jquery.ui.scrollable.css
             #./src/css/jquery.ui.panel.css
-            
         @
 
         # extract header from this file
         header = ./src/css/common.css
-
 
         out = ./build/jquery.ui.extra.css
     @
@@ -84,7 +79,6 @@ tasks =[{}]
             yui =[]
                 --preserve-semi
             @
-
         @
 
         out = ./build/jquery.ui.extra.min.js
@@ -109,8 +103,6 @@ tasks =[{}]
                 #--embed-fonts
                 #--embed-imports
             @
-
-
         @
 
         out = ./build/jquery.ui.extra.min.css

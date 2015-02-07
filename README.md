@@ -23,6 +23,7 @@ included in [components.css](https://github.com/foo123/components.css)
 * custom css animations, custom css spinners
 * radio, checkbox, switch-button checkbox, push-button checkbox  (custom-styled radio,checkbox with minimal hassle and maximum compatibility)
 * disabable/delayable  ("disables" an area by overlaying a customizable screen/"delays" an area by overlaying a customizable spinner)
+* polymorphic  (element which can change forms, i.e show/hide parts of its content depending on a *mode* defined in its css class)
 * removable  (element which can be "removed easily with a style")
 * dropdown  (custom-styled dropdown with minimal hassle and maximum compatibility)
 * dropdown_menu  (custom-styled dropdown_menu with minimal hassle and maximum compatibility)

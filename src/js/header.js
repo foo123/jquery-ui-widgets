@@ -4,9 +4,55 @@
 *   https://github.com/foo123/jquery-ui-widgets
 *
 **/
-!function( $ ) {
-
+!function( jQuery, undef ) {
 "use strict";
+
+var $ = jQuery, jQueryUIExtra, $UI, HAS = 'hasOwnProperty';
+jQueryUIExtra = (function(){
+    var NAMESPACE = "uiExtra", 
+        
+        NS = function(s) { return NAMESPACE + "." + s; },
+        
+        _UUID = 0,
+        
+        UUID = function( NS ) {
+            return [NS||'UI', ++_UUID, new Date().getTime()].join('_');
+        },
+        
+        whichTransitionEvent = function() {
+            var t, te = null,
+                el = document.createElement('div'),
+                transitions = {
+                    'transition'        :'transitionend',
+                    'msTransition'      :'MSTransitionEnd',
+                    'OTransition'       :'oTransitionEnd',
+                    'MozTransition'     :'transitionend',
+                    'WebkitTransition'  :'webkitTransitionEnd'
+                }
+            ;
+
+            for (t in transitions)
+            {
+                if ( transitions[HAS](t) )
+                {
+                    if ( 'undefined' != typeof(el.style[t]) )
+                    {
+                        te = transitions[t];
+                        break;
+                    }
+                }
+            }
+            return te;
+        }
+    ;
+    
+    return {
+        NS: NS,
+        UUID: UUID,
+        transitionEvent: whichTransitionEvent()
+    };
+})();
+$UI = jQueryUIExtra;
 
 function esc_re( s ) { return s.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"); }
 
@@ -39,46 +85,4 @@ $.fn.transferClasses = function( prefix, el ) {
     }
     return this;
 };
-
-var jQueryUIExtra = function() {
-    var NAMESPACE = "uiExtra", 
-        
-        NS = function(s) { return NAMESPACE + "." + s; },
-        
-        _UUID = 0,
-        
-        UUID = function( NS ) {
-            return [NS||'UI', ++_UUID, new Date().getTime()].join('_');
-        },
-        
-        whichTransitionEvent = function() {
-            var t, te = null,
-                el = document.createElement('div'),
-                transitions = {
-                    'transition'        :'transitionend',
-                    'msTransition'      :'MSTransitionEnd',
-                    'OTransition'       :'oTransitionEnd',
-                    'MozTransition'     :'transitionend',
-                    'WebkitTransition'  :'webkitTransitionEnd'
-                }
-            ;
-
-            for (t in transitions)
-            {
-                if ( 'undefined' != typeof(el.style[t]) )
-                {
-                    te = transitions[t];
-                    break;
-                }
-            }
-            return te;
-        }
-    ;
-    
-    return {
-        NS: NS,
-        UUID: UUID,
-        transitionEvent: whichTransitionEvent()
-    };
-}();
 

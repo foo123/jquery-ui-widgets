@@ -1,5 +1,5 @@
-.ui-delayable,
-.ui-disabable 
+.ui-delayable-overlay,
+.ui-disabable-overlay 
 {
     position: absolute;
     padding: 0;
@@ -22,7 +22,7 @@
     transition-delay: 0s, .04s;
     cursor: inherit;
 }
-.ui-disabable:after
+.ui-disabable-overlay:after
 {
     display: block;
     position: absolute;
@@ -38,31 +38,31 @@
     z-index: 1;
     transform: scale(1, 1);
 }
-.ui-disabled > .ui-disabable 
+.ui-disabled > .ui-disabable-overlay 
 {
     z-index: 100;
     opacity: 1;
     cursor: not-allowed;
 }
-.ui-disabled > .ui-disabable:after
+.ui-disabled > .ui-disabable-overlay:after
 {
     content: "\26D4";
 }
-.ui-enabled  > .ui-disabable
+.ui-enabled  > .ui-disabable-overlay
 {
     transition-delay: .65s, 0s;
 }
-.ui-delayed > .ui-disabable
+.ui-delayed > .ui-disabable-overlay
 {
     background-color: rgba(255,255,255,0);
 }
-.ui-delayed  > .ui-delayable
+.ui-delayed  > .ui-delayable-overlay
 {
     z-index: 500;
     opacity: 1;
     cursor: progress;
 }
-.ui-undelayed  > .ui-delayable
+.ui-undelayed  > .ui-delayable-overlay
 {
     transition-delay: .65s, 0s;
 }

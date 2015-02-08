@@ -1,4 +1,4 @@
-.ui-removable  .ui-removable-remove {
+.ui-removable-wrapper  .ui-removable-remove {
     cursor: pointer;
     position: absolute;
     display: block;
@@ -28,7 +28,7 @@
     -o-transition: opacity 0.5s;
     transition: opacity 0.5s;
 }
-.ui-removable  .ui-removable-remove:before {
+.ui-removable-wrapper  .ui-removable-remove:before {
     cursor: pointer;
     position: absolute;
     display: block;
@@ -50,7 +50,7 @@
     background: none;
     background-color: inherit;
 }
-.ui-removable  .ui-removable-remove:after {
+.ui-removable-wrapper  .ui-removable-remove:after {
     cursor: pointer;
     position: absolute;
     display: block;
@@ -70,9 +70,9 @@
     background-repeat: inherit;
     background-position: inherit;
 }
-.ui-removable:hover  .ui-removable-remove {
+.ui-removable-wrapper:hover  .ui-removable-remove {
     opacity: 1;
 }
-.ui-removable  .ui-removable-remove:active {
+.ui-removable-wrapper  .ui-removable-remove:active {
     outline: none;
 }

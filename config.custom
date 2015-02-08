@@ -15,8 +15,8 @@ tasks =[{}]
             #./src/js/jquery.ui.effects.js
             ./src/js/jquery.ui.checkboxes.js
             ./src/js/jquery.ui.disabable.js
+            ./src/js/jquery.ui.morphable.js
             ./src/js/jquery.ui.removable.js
-            ./src/js/jquery.ui.polymorphic.js
             ./src/js/jquery.ui.dropdown.js
             ./src/js/jquery.ui.dropdown_menu.js
             ./src/js/jquery.ui.tooltip2.js

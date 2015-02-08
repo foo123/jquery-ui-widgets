@@ -92,6 +92,8 @@ included in [components.css](https://github.com/foo123/components.css)
             ,showClass: 'show-if-${MODE}'
             ,hideClass: 'hide-if-${MODE}'
         });
+        // methods
+        $('#screen').morphable('morph', new_mode);
         
         // scrollable(s)
         $('#scrollable-images').scrollable({

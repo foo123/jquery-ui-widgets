@@ -70,6 +70,7 @@ $.widget( $UI.NS("morphable"), {
     
     _styleSheet: null,
     _cssStyles: null,
+    _curMode: null,
     
     _create: function() {
         var self = this, o = self.options, el = self.element, i, j,
@@ -136,9 +137,25 @@ $.widget( $UI.NS("morphable"), {
         self._styleSheet = createStyleSheet( 'all', self._cssStyles = cssStyles );
     },
 
+    morph: function( new_mode ) {
+        var self = this, el = self.element, modeClass = self.options.modeClass,
+            prev_mode = self._curMode, has_changed = prev_mode !== new_mode;
+        if ( has_changed ) 
+        {
+            if (prev_mode) el.removeClass(modeClass.split('${MODE}').join(prev_mode));
+            self._curMode = new_mode;
+            if (new_mode) el.addClass(modeClass.split('${MODE}').join(new_mode));
+        }
+        return self;
+    },
+    
     _destroy: function() {
         var self = this;
-        self.element.removeClass('ui-morphable');
+        self.element.removeClass('ui-morphable' + (self._curMode
+            ? (' '+self.options.modeClass.split('${MODE}').join(self._curMode))
+            : ''
+        ));
+        self._curMode = null;
         self._cssStyles = null;
         disposeStyleSheet( self._styleSheet );
         self._styleSheet = null;
